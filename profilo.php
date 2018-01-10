@@ -1,18 +1,6 @@
 <?php
 	require 'config.php';
 
-define("TRE",    3);
-define("DUE",    2);
-define("QUATTRO",    4);
-define("CINQUE",    5);
-define("TREDICI",    13);
-define("SEI",    6);
-define("UNDICI",    11);
-define("SETTE",    7);
-define("OTTO",    8);
-define("NOVE",    9);
-define("DIECI",    10);
-
 session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
@@ -46,7 +34,11 @@ if($conn === '') {
         session_start();
         $email = $_SESSION['email'];
         $query = sprintf("select * from utente inner join credenziale on id=utente where email='".$email."'");
-        $conn = new mysqli($servername, $user, $pass, $database);
+        $conn = '';
+
+        if($conn === '') {
+            $conn = new mysqli($servername, $user, $pass, $database);
+        }
         $result = $conn->query($query);
         $row='';
         if($result->num_rows === 1) {
@@ -62,7 +54,7 @@ if($conn === '') {
                     <td><input class="inputfiltro2" type="text" placeholder="Nome" id="nome2" name="nome2" maxlength="50" 
                          value="<?php
                             	require 'config.php';
-                                
+                                define('TRE',    3);
                                 if(isset($_POST['salvare'])===true){
                                 	$nome=$_POST['nome2'];
                                    
@@ -80,7 +72,7 @@ if($conn === '') {
                     <td><input class="inputfiltro2" type="text" placeholder="Cognome" id="cognome2" name="cognome2" maxlength="50"
                          value="<?php
                                 require 'config.php';
-                                
+                                define('DUE',    2);
                                 if(isset($_POST['salvare'])===true){
                                 	$cognome=$_POST['cognome2'];
                             		if(isset($cognome)===true){
@@ -115,7 +107,7 @@ if($conn === '') {
   							<option value="m"
                             <?php
                             	require 'config.php';
-                                
+                                define('QUATTRO',    4);
                                 if(isset($_POST['salvare'])===true){
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
@@ -128,7 +120,7 @@ if($conn === '') {
   							<option value="f"
                             <?php
                             	require 'config.php';
-                                
+                                define('QUATTRO',    4);
                                 if(isset($_POST['salvare'])===true){
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
@@ -152,7 +144,7 @@ if($conn === '') {
                       <td> <input class="inputfiltro2" type="text" placeholder="Telefono" id="telefono2" name="telefono2" maxlength="10"
                          value="<?php
                             	require 'config.php';
-                                
+                                define('CINQUE',    5);
                                 if(isset($_POST['salvare'])===true){
                                 	$telefono=$_POST['telefono2'];
                             		if(isset($telefono)===true){
@@ -168,7 +160,7 @@ if($conn === '') {
                       <td><input class="inputfiltro2" type="text" placeholder="Email" id="email2" name="email2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                                
+                                 define('TREDICI',    13);
                                 if(isset($_POST['salvare'])===true){
                                 	$email=$_POST['email2'];
                             		if(isset($email)===true){
@@ -184,7 +176,7 @@ if($conn === '') {
                       <td> <input class="inputfiltro2" type="date" placeholder="Data di nascita" id="datadinascita2" name="datadinascita2"
                          value="<?php
                             	require 'config.php';
-                                
+                                 define('SEI',    6);
                                 if(isset($_POST['salvare'])===true){
                                 	$datadinascita=$_POST['datadinascita2'];
                             		if(isset($datadinascita)===true){
@@ -200,7 +192,7 @@ if($conn === '') {
                       <td>  <input class="inputfiltro2" type="text" placeholder="CAP" id="cap2" name="cap2" maxlength="5"
                          value="<?php
                             	require 'config.php';
-                                
+                                define('UNDICI',    11);
                                 if(isset($_POST['salvare'])===true){
                                 	$cap=$_POST['cap2'];
                             		if(isset($cap)===true){
@@ -223,7 +215,7 @@ if($conn === '') {
                         <td> <input class="inputfiltro2" type="text" placeholder="citta" id="citta2" name="citta2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                                
+                                define('SETTE',    7);
                                 if(isset($_POST['salvare'])===true){
                                 	$citta=$_POST['citta2'];
                             		if(isset($citta)===true){
@@ -239,7 +231,7 @@ if($conn === '') {
                         <td><input class="inputfiltro2" type="text" placeholder="indirizzo" id="indirizzo2" name="indirizzo2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                                
+                                define('OTTO',    8);
                                 if(isset($_POST['salvare'])===true){
                                 	$indirizzo=$_POST['indirizzo2'];
                             		if(isset($indirizzo)===true){
@@ -255,7 +247,7 @@ if($conn === '') {
                         <td><input class="inputfiltro2" type="text" placeholder="numcivico" id="numcivico2" name="numcivico2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                                
+                                define('NOVE',    9);
                                 if(isset($_POST['salvare'])===true){
                                 	$numcivico=$_POST['numcivico2'];
                             		if(isset($numcivico)===true){
@@ -271,7 +263,7 @@ if($conn === '') {
                         <td><input class="inputfiltro2" type="text" placeholder="Provincia" id="provincia2" name="provincia2" maxlength="2"
                          value="<?php
                             	require 'config.php';
-                                
+                                define('DIECI',    10);
                                 if(isset($_POST['salvare'])===true){
                                 	$provincia=$_POST['provincia2'];
                             		if(isset($provincia)===true){
