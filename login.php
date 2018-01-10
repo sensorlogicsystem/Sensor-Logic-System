@@ -7,7 +7,7 @@ $conn = '';
 $result = '';
 
 if(!isset($_SESSION['email']) === true) {
-	$conn = new mysqli($servername, $user, $pass, $database);
+    $conn = new mysqli($servername, $user, $pass, $database);
 	$query = sprintf("select permesso from credenziale where password = '%s' AND email = '%s'",
  	mysqli_real_escape_string($conn, $password),
  	mysqli_real_escape_string($conn, $email));
