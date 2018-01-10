@@ -120,11 +120,10 @@ if($result === false || $result->num_rows !== 1){
 
 <script type="text/javascript">
     var date = '';
-    var cLienti = '';
-    if(date == '' && cLienti == '') {
-        date = <?php require 'chartClienti.php'; echo json_encode($date) ?>;
-        clienti = <?php require 'chartClienti.php'; echo json_encode($clienti) ?>;
-    }
+    var clienti = '';
+
+    date = <?php require 'chartClienti.php'; echo json_encode($date) ?>;
+    clienti = <?php require 'chartClienti.php'; echo json_encode($clienti) ?>;
 
     var myChart = new Chart(document.getElementById("ChartClienti"), {
         type: 'line',
