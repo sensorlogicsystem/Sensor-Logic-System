@@ -2,9 +2,9 @@
 require 'config.php';
 
 session_start();
+$conn = null;
 $email = $_SESSION['email'];
 $password = $_SESSION['password'];
-$conn = '';
 $conn = new mysqli($servername, $user, $pass, $database);
 $query = sprintf("SELECT * FROM credenziale WHERE email = '%s' AND password = '%s'", mysqli_real_escape_string($conn, $email), mysqli_real_escape_string($conn, $password));
 $result = $conn->query($query);
