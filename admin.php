@@ -1,8 +1,9 @@
 <?php
 require 'config.php';
 
+$conn = '';
+
 session_start();
-$conn = null;
 $email = $_SESSION['email'];
 $password = $_SESSION['password'];
 $conn = new mysqli($servername, $user, $pass, $database);
