@@ -20,15 +20,17 @@ if($result->num_rows === 1) {
 	$_SESSION['password'] = $password;
     $row = mysqli_fetch_row($result);
     $permesso = $row[0];
-    if($permesso === "a") {
+    if($permesso === 'a') {
         header('Location: http://sensorlogicsystemlogin.altervista.org/admin.php');
-    } elseif($permesso === "t") {
+    }
+    if($permesso === 't') {
     	header('Location: http://sensorlogicsystemlogin.altervista.org/tecnico.php');
-    } elseif($permesso === "u") {
+    }
+    if($permesso === 'u') {
     	header('Location: http://sensorlogicsystemlogin.altervista.org/cliente.php');
     }
 } else {
     header('Location: http://sensorlogicsystemlogin.altervista.org/index.php?msg=failed');
 }
    
-$conn->close();
+$conn->close();
