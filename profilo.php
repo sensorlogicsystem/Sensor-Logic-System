@@ -1,13 +1,30 @@
 <?php
 	require 'config.php';
-    
-	session_start();
+
+define("TRE",    3);
+define("DUE",    2);
+define("QUATTRO",    4);
+define("CINQUE",    5);
+define("TREDICI",    13);
+define("SEI",    6);
+define("UNDICI",    11);
+define("SETTE",    7);
+define("OTTO",    8);
+define("NOVE",    9);
+define("DIECI",    10);
+
+session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
+$conn = '';
+
+if($conn === '') {
     $conn = new mysqli($servername, $user, $pass, $database);
+}
+
+    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
@@ -53,7 +70,7 @@
                             			echo $nome;
                                 	}
                                 }else{
-                                	echo $row[3];
+                                	echo $row[TRE];
                                 }
                             	
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required readonly="readonly"/></td>
@@ -70,7 +87,7 @@
                             			echo $cognome;
                                 	}
                                 }else{
-                                	echo $row[2];
+                                	echo $row[DUE];
                                 }
                             	
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required readonly="readonly"/></td>
@@ -102,10 +119,10 @@
                                 if(isset($_POST['salvare'])===true){
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
-                            			if($sesso==="m"){echo 'selected="selected"';}
+                            			if($sesso==='m'){echo 'selected="selected"';}
                                 	}
                                 }else{
-                                	if($row[4]==="m"){echo 'selected="selected"';}
+                                	if($row[QUATTRO]==='m'){echo 'selected="selected"';}
                                 }
                        		?>>M</option>
   							<option value="f"
@@ -115,10 +132,10 @@
                                 if(isset($_POST['salvare'])===true){
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
-                            			if($sesso==="f"){echo 'selected="selected"';}
+                            			if($sesso==='f'){echo 'selected="selected"';}
                                 	}
                                 }else{
-                                	if($row[4]==="f"){echo 'selected="selected"';}
+                                	if($row[QUATTRO]==='f'){echo 'selected="selected"';}
                                 }
                        		?>>F</option>
                     	</select> 
@@ -142,7 +159,7 @@
                             			echo $telefono;
                                 	}
                                 }else{
-                                	echo $row[5];
+                                	echo $row[CINQUE];
                                 }
                                 ?>" pattern= "[0-9]{0,10}" title="Deve essere composto da soli 10 numeri" required/></td>
                   </tr>
@@ -158,7 +175,7 @@
                             			echo $email;
                                 	}
                                 }else{
-                                	echo $row[13];
+                                	echo $row[TREDICI];
                                 }
                             	?>" pattern= "[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com" required/></td>
                   </tr>
@@ -174,7 +191,7 @@
                             			echo $datadinascita;
                                 	}
                                 }else{
-                                	echo $row[6];
+                                	echo $row[SEI];
                                 }
                        		?>" title="Deve contenere una data valida" required readonly="readonly"/></td>
                   </tr>
@@ -190,7 +207,7 @@
                             			echo $cap;
                                 	}
                                 }else{
-                                	echo $row[11];
+                                	echo $row[UNDICI];
                                 }
                             	?>" pattern= "[0-9]{0,5}" title="Deve essere composto da soli 5 numeri" required/></td>
                   </tr>
@@ -213,7 +230,7 @@
                             			echo $citta;
                                 	}
                                 }else{
-                                	echo $row[7];
+                                	echo $row[SETTE];
                                 }
                             	?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere"  required/></td>
                     </tr>
@@ -229,7 +246,7 @@
                             			echo $indirizzo;
                                 	}
                                 }else{
-                                	echo $row[8];
+                                	echo $row[OTTO];
                                 }
                             	?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                     </tr>
@@ -245,7 +262,7 @@
                             			echo $numcivico;
                                 	}
                                 }else{
-                                	echo $row[9];
+                                	echo $row[NOVE];
                                 }
                             	?>" pattern="[a-zA-Z0-9]+{0,50}"title="Deve essere composta da lettere e/o numeri" required/></td>
                     </tr>
@@ -261,7 +278,7 @@
                             			echo $provincia;
                                 	}
                                 }else{
-                                	echo $row[10];
+                                	echo $row[DIECI];
                                 }
                             	?>" pattern= "[A-Za-z]{0,2}" title="Deve contenere 2 lettere" required/></td>
                     </tr>
@@ -285,10 +302,13 @@
                 $query=sprintf("UPDATE credenziale SET email='".$email."' WHERE utente=".$row[0]);
                 $result2 = $conn->query($query);
 				if($result === false || $result2 === false) {
-                	echo '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
-     
+                    $str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Modifiche salvate con successo</span>';
+                    $str = '<span class="filtra">Modifiche salvate con successo</span>';
+
+                    echo $str;
                 }
         	}
         ?>
@@ -336,12 +356,18 @@
                   $query= sprintf("UPDATE credenziale SET password='".$password."' where email ='".$email."'");
                   $result=$conn->query($query);
                   if($result===false){
-                      echo '<span class="filtra">Impossibile modificare la password</span>';
+                      $str = '<span class="filtra">Impossibile modificare la password</span>';
+
+                      echo $str;
                   }else{
-                      echo '<span class="filtra">Password modificata</span>';
+                      $str = '<span class="filtra">Password modificata</span>';
+
+                      echo $str;
                   }
-              }else{        
-                  echo '<span class="filtra">Le password inserite non sono uguali</span>';
+              }else{
+                  $str = '<span class="filtra">Le password inserite non sono uguali</span>';
+
+                  echo $str;
               }
             }
         ?>
