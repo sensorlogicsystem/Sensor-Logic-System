@@ -119,8 +119,8 @@ if($result === false || $result->num_rows !== 1){
 <canvas id="ChartClienti" class="chartClienti"></canvas>
 
 <script type="text/javascript">
-    var date = '';
-    var clienti = '';
+    var date = = new Array();
+    var clienti = = new Array();
 
     date = <?php require 'chartClienti.php'; echo json_encode($date) ?>;
     clienti = <?php require 'chartClienti.php'; echo json_encode($clienti) ?>;
