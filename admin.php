@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 
-$conn = '';
+$conn = 'inizializzazione';
 
 session_start();
 $email = $_SESSION['email'];
