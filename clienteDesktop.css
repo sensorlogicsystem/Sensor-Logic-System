@@ -1,0 +1,14 @@
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 18px;
+   width: 100%;
+   text-align:center;
+}
+
+.blue{ background-color: #3ea99f;}
+.blue select{color: white;}
+.option{
+	background-color: #3ea99f;
+    text-align:center;
+}
