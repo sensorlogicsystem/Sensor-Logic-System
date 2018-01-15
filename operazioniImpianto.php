@@ -89,7 +89,8 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
-                	echo '<span class="filtra">Non è presente nessun cliente con ID: '.$idcliente.'</span>';
+                	$str = '<span class="filtra">Non è presente nessun cliente con ID: '.$idcliente.'</span>';
+                    echo $str;
                 } else {
                 	$idproprietario = $_POST['idproprietario'];
                     $nomeimpianto= $_POST['nomeimpianto'];
@@ -103,9 +104,11 @@
                 	$query=sprintf("insert into impianto (proprietario, nomeimpianto, citta, indirizzo, numcivico, provincia, cap, descrizione, tipo) values (".$idproprietario.",'".$nomeimpianto."','".$citta."','".$indirizzo."','".$numcivico."','".$provincia."','".$cap."','".$descrizione."','".$tipo."')");
                 	$result = $conn->query($query);
                     if($result === false){
-                    	echo '<span class="filtra">Registrazione non riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione non riuscita</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Registrazione riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione riuscita</span>';
+                        echo $str;
                     }
                 }
         	}
@@ -141,12 +144,15 @@
                 	$query=sprintf("DELETE FROM impianto WHERE id=".$id."");
                     $result = $conn->query($query);
                     if(!$result === false) {
-                        echo '<span class="filtra">Impianto rimosso con successo</span>';
+                        $str = '<span class="filtra">Impianto rimosso con successo</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Impianto non rimosso, si è verifica un problema</span>';
+                    	$str = '<span class="filtra">Impianto non rimosso, si è verifica un problema</span>';
+                        echo $str;
                     }
                 } else {
-                	echo '<span class="filtra">Impianto non rimosso, nessun impianto ha ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Impianto non rimosso, nessun impianto ha ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -181,9 +187,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	echo '<span class="filtra">Recuperati i dati dell'."'".'impianto con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Recuperati i dati dell'."'".'impianto con ID: '.$id.'</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Non è presente nessun impianto con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Non è presente nessun impianto con ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -423,9 +431,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
 				if($result === false) {
-                	echo '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Modifiche salvate con successo</span>';
+                	$str = '<span class="filtra">Modifiche salvate con successo</span>';
+                    echo $str;
                 }
         	}
         ?>

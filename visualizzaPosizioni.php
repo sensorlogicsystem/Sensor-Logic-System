@@ -68,12 +68,13 @@
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);
                             
-                        	echo '<tr>';
-                            echo '<td>'.$row[0].'</td>';
-                            echo '<td>'.$row[1].'</td>';
-                            echo '<td>'.$row[2].'</td>';
-                            echo '<td>'.$row[3].'</td>';
-                            echo '</tr>';
+                        	$str = '<tr>';
+                            $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[1]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
+                            $str = $str.'</tr>';
+                            echo $str;
                         }
                     ?>
                 </tbody>

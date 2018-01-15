@@ -93,28 +93,29 @@
                             	$data1=substr($data,0,4).substr($data,5,2).substr($data,8,2);
                                 $data2=substr($row[1],0,4).substr($row[1],4,2).substr($row[1],6,2);
                                 if($data1===$data2){
-                                	echo '<tr>';
-                                    echo '<td>'.$row[0].'</td>';
-                                    echo '<td>'.substr($row[1],0,4).'-'.substr($row[1],4,2).'-'.substr($row[1],6,2).'</td>';
-                                    echo '<td>'.substr($row[1],8,2).':'.substr($row[1],10,2).'</td>';
-                                    echo '<td>'.substr($row[1],12).'</td>';
-                                    echo '<td>'.$row[2].'</td>';
-                                    echo '<td>'.$row[3].'</td>';
-                                    echo '<td>'.$row[4].'</td>';
-                                    echo '<td>'.$row[5].'</td>';
-                                    echo '</tr>';
+                                	$str = '<tr>';
+                                    $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
+                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1],0,4)).'-'.substr(htmlspecialchars($row[1],4,2)).'-'.substr(htmlspecialchars($row[1],6,2)).'</td>';
+                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1],8,2)).':'.substr(htmlspecialchars($row[1],10,2)).'</td>';
+                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1],12)).'</td>';
+                                    $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
+                                    $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
+                                    $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
+                                    $str = $str.'<td>'.htmlspecialchars($row[5]).'</td>';
+                                    $str = $str.'</tr>';
+                                    echo $str;
                                 }
                             }else{
-                                echo '<tr>';
-                                echo '<td>'.$row[0].'</td>';
-                                echo '<td>'.substr($row[1],0,4).'-'.substr($row[1],4,2).'-'.substr($row[1],6,2).'</td>';
-                                echo '<td>'.substr($row[1],8,2).':'.substr($row[1],10,2).'</td>';
-                                echo '<td>'.substr($row[1],12).'</td>';
-                                echo '<td>'.$row[2].'</td>';
-                                echo '<td>'.$row[3].'</td>';
-                                echo '<td>'.$row[4].'</td>';
-                                echo '<td>'.$row[5].'</td>';
-                                echo '</tr>';
+                                $str = '<tr>';
+                                $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
+                                $str = $str.'<td>'.substr(htmlspecialchars($row[1],0,4)).'-'.substr(htmlspecialchars($row[1],4,2)).'-'.substr(htmlspecialchars($row[1],6,2)).'</td>';
+                                $str = $str.'<td>'.substr(htmlspecialchars($row[1],8,2)).':'.substr(htmlspecialchars($row[1],10,2)).'</td>';
+                               	$str = $str.'<td>'.substr(htmlspecialchars($row[1],12)).'</td>';
+                                $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
+                                $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
+                                $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
+                                $str = $str.'<td>'.htmlspecialchars($row[5]).'</td>';
+                                echo $str;
                             }
                         }
                     ?>                    

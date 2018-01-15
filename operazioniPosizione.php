@@ -64,16 +64,19 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
-                	echo '<span class="filtra">Non è presente nessun impianto con ID: '.$idimpianto.'</span>';
+                	$str = '<span class="filtra">Non è presente nessun impianto con ID: '.$idimpianto.'</span>';
+                    echo $str;
                 } else {
                     $nomeposizione= $_POST['nomeposizione'];
                     $descrizione= $_POST['descrizione'];
                 	$query=sprintf("insert into posizione (nomeposizione, descrizione, impianto) values ('".$nomeposizione."','".$descrizione."',".$idimpianto.")");
                 	$result = $conn->query($query);
                     if($result === false){
-                    	echo '<span class="filtra">Registrazione non riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione non riuscita</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Registrazione riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione riuscita</span>';
+                        echo $str;
                     }
                 }
         	}
@@ -109,12 +112,15 @@
                 	$query=sprintf("DELETE FROM posizione WHERE id=".$id);
                     $result = $conn->query($query);
                     if(!$result === false) {
-                        echo '<span class="filtra">Posizione rimossa con successo</span>';
+                        $str = '<span class="filtra">Posizione rimossa con successo</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Posizione non rimossa, si è verifica un problema</span>';
+                    	$str = '<span class="filtra">Posizione non rimossa, si è verifica un problema</span>';
+                        echo $str;
                     }
                 } else {
-                	echo '<span class="filtra">Posizione non rimossa, nessuna posizione ha ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Posizione non rimossa, nessuna posizione ha ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -149,9 +155,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	echo '<span class="filtra">Recuperati i dati della posizione con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Recuperati i dati della posizione con ID: '.$id.'</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Non è presente nessuna posizione con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Non è presente nessuna posizione con ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -171,7 +179,7 @@
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[3];
+                   						echo htmlspecialchars($row[3]);
                                     }
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$idimpianto=$_POST['idimpianto2'];
@@ -199,7 +207,7 @@
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[1];
+                   						echo htmlspecialchars($row[1]);
                                     }
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$nome=$_POST['nomeposizione2'];
@@ -227,7 +235,7 @@
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[2];
+                   						echo htmlspecialchars($row[2]);
                                     }
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$descrizione=$_POST['descrizione2'];
@@ -252,9 +260,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
 				if($result === false) {
-                	echo '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Modifiche salvate con successo</span>';
+                	$str = '<span class="filtra">Modifiche salvate con successo</span>';
+                    echo $str;
                 }
         	}
         ?>

@@ -84,18 +84,19 @@
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);
                             
-                        	echo '<tr>';
-                            echo '<td>'.$row[0].'</td>';
-                            echo '<td>'.$row[2].'</td>';
-                            echo '<td>'.$row[1].'</td>';
-                            echo '<td>'.$row[3].'</td>';
-                            echo '<td>'.$row[4].'</td>';
-                            echo '<td>'.$row[5].'</td>';
-                            echo '<td>'.$row[6].'</td>';
-                            echo '<td>'.$row[7].'</td>';
-                            echo '<td>'.$row[9].'</td>';
-                            echo '<td>'.$row[8].'</td>';
-                            echo '</tr>';
+                        	$str = '<tr>';
+                            $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[1]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[5]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[6]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[7]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[9]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[8]).'</td>';
+                            $str = $str.'</tr>';
+                            echo $str;
                         }
                     ?>
                 </tbody>

@@ -64,7 +64,8 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
-                	echo '<span class="filtra">Non è presente nessuna posizione con ID: '.$idposizione.'</span>';
+                	$str = '<span class="filtra">Non è presente nessuna posizione con ID: '.$idposizione.'</span>';
+                    echo $str;
                 } else {
                     $tipo= $_POST['tipo'];
                     $marca= $_POST['marca'];
@@ -75,9 +76,11 @@
                 	$query=sprintf("insert into sensore (id, tipo, marca, posizione) values ('".$id."','".$tipo."','".$marca."',".$idposizione.")");
                 	$result = $conn->query($query);
                     if($result === false){
-                    	echo '<span class="filtra">Registrazione non riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione non riuscita</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Registrazione riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione riuscita</span>';
+                        echo $str;
                     }
                 }
         	}
@@ -113,12 +116,15 @@
                 	$query=sprintf("DELETE FROM sensore WHERE id='".$id."'");
                     $result = $conn->query($query);
                     if(!$result === false) {
-                        echo '<span class="filtra">Sensore rimosso con successo</span>';
+                        $str = '<span class="filtra">Sensore rimosso con successo</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Sensore non rimosso, si è verifica un problema</span>';
+                    	$str = '<span class="filtra">Sensore non rimosso, si è verifica un problema</span>';
+                        echo $str;
                     }
                 } else {
-                	echo '<span class="filtra">Sensore non rimosso, nessun sensore ha ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Sensore non rimosso, nessun sensore ha ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -153,9 +159,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	echo '<span class="filtra">Recuperati i dati del sensore con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Recuperati i dati del sensore con ID: '.$id.'</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Non è presente nessun sensore con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Non è presente nessun sensore con ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -175,7 +183,7 @@
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[3];
+                   						echo htmlspecialchars($row[3]);
                                     }
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$idposizione=$_POST['idposizione2'];
@@ -203,7 +211,7 @@
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[1];
+                   						echo htmlspecialchars($row[1]);
                                     }
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$tipo=$_POST['tipo2'];
@@ -231,7 +239,7 @@
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[2];
+                   						echo htmlspecialchars($row[2]);
                                     }
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$marca=$_POST['marca2'];
@@ -260,9 +268,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
 				if($result === false) {
-                	echo '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Modifiche salvate con successo</span>';
+                	$str = '<span class="filtra">Modifiche salvate con successo</span>';
+                    echo $str;
                 }
         	}
         ?>

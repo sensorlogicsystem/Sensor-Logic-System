@@ -44,11 +44,13 @@
                         $result=$conn->query($query);
                         $count=$result->num_rows;
                         if($count===0){
-                        	echo '<option class="option"> Nessun impianto registrato</option>';
+                        	$str = '<option class="option"> Nessun impianto registrato</option>';
+                            echo $str;
                         }else {
                           for($i=0; $i<$count; $i++){
                               $row=mysqli_fetch_row($result);
-                              echo '<option class="option">'.$row[0].'</option>';
+                              $str = '<option class="option">'.htmlspecialchars($row[0]).'</option>';
+                              echo $str;
                           }
                         }
                     ?>

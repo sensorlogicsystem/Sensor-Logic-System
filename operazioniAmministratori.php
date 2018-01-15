@@ -134,7 +134,8 @@
                     $query = sprintf("insert into credenziale (email, password, permesso, utente) values ('".$email."','".$psw."','a',".$id.")");
                     $result = $conn->query($query);
                     if($result !== false) {
-                    	echo '<span class="filtra">Registrazione riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione riuscita</span>';
+                        echo $str;
                         $nome_mittente = 'SensorLogicSystem';
                         $mail_mittente = 'sensorlogicsystem@gmail.com';
                         $mail_oggetto = 'Benvenuto/a nella nostra azienda';
@@ -148,17 +149,21 @@
                         	$send = mail($email, $mail_oggetto, $mail_corpo, $mail_headers);
                         }
                         if($send === true){
-                        	echo '<br /><span class="filtra">E-mail inviata al cliente</span>';
+                        	$str = '<br /><span class="filtra">E-mail inviata al cliente</span>';
+                            echo $str;
                         } else {
-                        	echo '<br /><span class="filtra">'."Invio dell'e-mail non riuscito".'</span>';
+                        	$str = '<br /><span class="filtra">'."Invio dell'e-mail non riuscito".'</span>';
+                            echo $str;
                         }
                     } else {
                     	$query = sprintf("delete from utente where cf='".$_POST['cf']."'");
                         $conn->query($query);
-                    	echo '<span class="filtra">Registrazione non riuscita</span>';
+                    	$str = '<span class="filtra">Registrazione non riuscita</span>';
+                        echo $str;
                     }
                 } else {
-                	echo '<span class="filtra">Registrazione non riuscita</span>';
+                	$str = '<span class="filtra">Registrazione non riuscita</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -194,12 +199,15 @@
                 	$query=sprintf("DELETE FROM utente WHERE id=".$id."");
                     $result = $conn->query($query);
                     if(!$result === false) {
-                        echo '<span class="filtra">Amministratore rimosso con successo</span>';
+                        $str = '<span class="filtra">Amministratore rimosso con successo</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Amministratore non rimosso, si è verifica un problema</span>';
+                    	$str = '<span class="filtra">Amministratore non rimosso, si è verifica un problema</span>';
+                        echo $str;
                     }
                 } else {
-                	echo '<span class="filtra">Amministratore non rimosso, nessun amministratore ha ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Amministratore non rimosso, nessun amministratore ha ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -234,9 +242,11 @@
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	echo '<span class="filtra">Recuperati i dati dell'."'".'amministratore con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Recuperati i dati dell'."'".'amministratore con ID: '.$id.'</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Non è presente nessun amministratore con ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Non è presente nessun amministratore con ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>
@@ -569,9 +579,11 @@
                 $query=sprintf("UPDATE credenziale SET email='".$email."' WHERE utente=".$_POST['id2']);
                 $result2 = $conn->query($query);
 				if($result === false || $result2 === false) {
-                	echo '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
+                    echo $str;
                 } else {
-                	echo '<span class="filtra">Modifiche salvate con successo</span>';
+                	$str = '<span class="filtra">Modifiche salvate con successo</span>';
+                    echo $str;
                 }
         	}
         ?>

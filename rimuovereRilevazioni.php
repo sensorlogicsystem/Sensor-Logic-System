@@ -51,12 +51,15 @@
                     $result = $conn->query($query);
       
                     if(!$result === false) {
-                        echo '<span class="filtra">Rivelazione rimossa con successo</span>';
+                        $str = '<span class="filtra">Rivelazione rimossa con successo</span>';
+                        echo $str;
                     } else {
-                    	echo '<span class="filtra">Rivelazione non rimossa, si è verificato un problema</span>';
+                    	$str = '<span class="filtra">Rivelazione non rimossa, si è verificato un problema</span>';
+                        echo $str;
                     }
                 } else {
-                	echo '<span class="filtra">Rivelazione non rimossa, nessuna rilevazione ha ID: '.$id.'</span>';
+                	$str = '<span class="filtra">Rivelazione non rimossa, nessuna rilevazione ha ID: '.$id.'</span>';
+                    echo $str;
                 }
             }
         ?>

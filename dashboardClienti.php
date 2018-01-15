@@ -56,7 +56,8 @@
                     	$conn = new mysqli($servername, $user, $pass, $database);
                         $query = sprintf("select * from posizione inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='".$impianto."' and email='".$email."'");
                         $result = $conn->query($query);
-                        echo '<span class="resstat">'.$result->num_rows.'</span>';
+                        $str = '<span class="resstat">'.$result->num_rows.'</span>';
+                        echo $str;
                     ?>
               </div>
               <div class="stat"> 
@@ -67,7 +68,8 @@
                     	$conn = new mysqli($servername, $user, $pass, $database);
                         $query = sprintf("select * from sensore inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='".$impianto."' and email='".$email."'");
                         $result = $conn->query($query);
-                        echo '<span class="resstat">'.$result->num_rows.'</span>';
+                        $str = '<span class="resstat">'.$result->num_rows.'</span>';
+                        echo $str;
                     ?>
               </div>
               <div class="stat"> 
@@ -78,7 +80,8 @@
                     	$conn = new mysqli($servername, $user, $pass, $database);
                         $query = sprintf("select * from rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='".$impianto."' and email='".$email."'");
                         $result = $conn->query($query);
-                        echo '<span class="resstat">'.$result->num_rows.'</span>';
+                        $str = '<span class="resstat">'.$result->num_rows.'</span>';
+                        echo $str;
                     ?>
               </div>
               <div class="stat"> 
@@ -110,7 +113,8 @@
                             	$count++;
                             }
                         }
-                        echo '<span class="resstat">'.$count.'</span>';
+                        $str = '<span class="resstat">'.$count.'</span>';
+                        echo $str;
                     ?>
               </div>
             </div>
