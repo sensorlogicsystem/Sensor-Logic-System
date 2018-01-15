@@ -41,12 +41,12 @@ require 'config.php';
     if($countTipo>=5){
     	for($i=0;$i<5;$i++){
         	$row=mysqli_fetch_row($result);
-            $tipo[$i]= $row[0];
+            $tipo[$i]= htmlspecialchars($row[0]);
         }
     }else{
     	for($i=0;$i<$result->num_rows;$i++){
         	$row=mysqli_fetch_row($result);
-            $tipo[$i]= $row[0];
+            $tipo[$i]= htmlspecialchars($row[0]);
         }
     }
     
@@ -56,7 +56,7 @@ require 'config.php';
         $rilevazioni[$i]=0;
          for($l=0; $l<$result->num_rows; $l++){
             $row=mysqli_fetch_row($result);
-            $date2=substr($row[0],0,8);
+            $date2=substr(htmlspecialchars($row[0]),0,8);
 			if($date===$date2){
     			$rilevazioni[$i]++;
       		}

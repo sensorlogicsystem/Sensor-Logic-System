@@ -26,14 +26,14 @@
     if($result->num_rows>=5){
     	for($i=0;$i<5;$i++){
         	$row=mysqli_fetch_row($result);
-            $tipo[$i]= $row[0];
-            $countTipo[$i]=$row[1];
+            $tipo[$i]= htmlspecialchars($row[0]);
+            $countTipo[$i]=htmlspecialchars($row[1]);
         }
     }else{
     	for($i=0;$i<$result->num_rows;$i++){
         	$row=mysqli_fetch_row($result);
-            $tipo[$i]= $row[0];
-            $countTipo[$i]=$row[1];
+            $tipo[$i]= htmlspecialchars($row[0]);
+            $countTipo[$i]= htmlspecialchars($row[1]);
         }
     }
 ?>
