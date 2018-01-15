@@ -27,11 +27,11 @@
       <div class="contenitoreFiltri">
       	<form class="form"  action="visualizzaAmministratori.php" method="post">
           <span class="filtra"> Filtra per:</span>
-          <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
-          <input class="inputfiltro" type="text" placeholder="Nome" id="nome" name="nome" maxlength="50" value="<?php $nome=$_POST['nome']; if(isset($nome)===true){echo $nome;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
-          <input class="inputfiltro" type="text" placeholder="Cognome" id="cognome" name="cognome" maxlength="50" value="<?php $cognome=$_POST['cognome']; if(isset($cognome)===true){echo $cognome;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
-          <input class="inputfiltro" type="text" placeholder="Email" id="email" name="email" maxlength="50" value="<?php $email=$_POST['email']; if(isset($email)===true){echo $email;}?>"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com"/>
-          <input class="inputfiltro" type="text" placeholder="Città" id="città" name="città" maxlength="50" value="<?php $citta=$_POST['città']; if(isset($citta)===true){echo $citta;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composta da sole lettere" />
+          <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
+          <input class="inputfiltro" type="text" placeholder="Nome" id="nome" name="nome" maxlength="50" value="<?php $nome=$_POST['nome']; if(isset($nome)===true){echo htmlspecialchars($nome);}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
+          <input class="inputfiltro" type="text" placeholder="Cognome" id="cognome" name="cognome" maxlength="50" value="<?php $cognome=$_POST['cognome']; if(isset($cognome)===true){echo htmlspecialchars($cognome);}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
+          <input class="inputfiltro" type="text" placeholder="Email" id="email" name="email" maxlength="50" value="<?php $email=$_POST['email']; if(isset($email)===true){echo htmlspecialchars($email);}?>"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com"/>
+          <input class="inputfiltro" type="text" placeholder="Città" id="città" name="città" maxlength="50" value="<?php $citta=$_POST['città']; if(isset($citta)===true){echo htmlspecialchars($citta);}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composta da sole lettere" />
           <button class="buttfiltro" name="filtro" value="filtro" type="submit" id="filtro">Ricerca</button>
           <div class="positiontable">
            <table class="tabellaClienti">

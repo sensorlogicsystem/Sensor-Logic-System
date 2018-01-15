@@ -27,10 +27,10 @@
       <div class="contenitoreFiltri">
       	<form class="form"  action="visualizzaSensori.php" method="post">
           <span class="filtra"> Filtra per:</span>
-          <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="50" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>"  pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
-          <input class="inputfiltro" type="text" placeholder="TipoSensore" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo $tipo;}?>" />
-          <input class="inputfiltro" type="text" placeholder="Marca" id="marca" name="marca" maxlength="50" value="<?php $marca=$_POST['marca']; if(isset($marca)===true){echo $marca;}?>" />
-          <input class="inputfiltro" type="text" placeholder="Posizione" id="posizione" name="posizione" maxlength="11" value="<?php $posizione=$_POST['posizione']; if(isset($posizione)===true){echo $posizione;}?>" pattern="[0-9]{0,11}" title="Deve essere composto da soli numeri "/>
+          <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="50" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>"  pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="TipoSensore" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo htmlspecialchars($tipo);}?>" />
+          <input class="inputfiltro" type="text" placeholder="Marca" id="marca" name="marca" maxlength="50" value="<?php $marca=$_POST['marca']; if(isset($marca)===true){echo htmlspecialchars($marca);}?>" />
+          <input class="inputfiltro" type="text" placeholder="Posizione" id="posizione" name="posizione" maxlength="11" value="<?php $posizione=$_POST['posizione']; if(isset($posizione)===true){echo htmlspecialchars($posizione);}?>" pattern="[0-9]{0,11}" title="Deve essere composto da soli numeri "/>
           
           <button class="buttfiltro" name="filtro" value="filtro" type="submit" id="filtro">Ricerca</button>
           <div class="positiontable">

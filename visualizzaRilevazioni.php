@@ -27,12 +27,12 @@
       <div class="contenitoreFiltri">
       	<form class="form"  action="visualizzaRilevazioni.php" method="post">
           <span class="filtra"> Filtra per:</span>
-          <input class="inputfiltro" type="text" placeholder="Id Rilevazione" id="idr" name="idr" maxlength="11" value="<?php $idr=$_POST['idr']; if(isset($idr)===true){echo $idr;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
-          <input class="inputfiltro" type="date" placeholder="Data Rilevazione" id="data" name="data"  value="<?php $data=$_POST['data']; if(isset($data)===true){echo $data;}?>"/>
-          <input class="inputfiltro" type="text" placeholder="Id Sensore" id="ids" name="ids" maxlength="50" value="<?php $ids=$_POST['ids']; if(isset($ids)===true){echo $ids;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
-          <input class="inputfiltro" type="text" placeholder="Tipo Sensore" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo $tipo;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
-          <input class="inputfiltro" type="text" placeholder="Marca Sensore" id="marca" name="marca" maxlength="50" value="<?php $marca=$_POST['marca']; if(isset($marca)===true){echo $marca;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
-          <input class="inputfiltro" type="text" placeholder="Nome Posizione" id="nomeposizione" name="nomeposizione" maxlength="50" value="<?php $nomeposizione=$_POST['nomeposizione']; if(isset($nomeposizione)===true){echo $nomeposizione;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="Id Rilevazione" id="idr" name="idr" maxlength="11" value="<?php $idr=$_POST['idr']; if(isset($idr)===true){echo htmlspecialchars($idr);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
+          <input class="inputfiltro" type="date" placeholder="Data Rilevazione" id="data" name="data"  value="<?php $data=$_POST['data']; if(isset($data)===true){echo htmlspecialchars($data);}?>"/>
+          <input class="inputfiltro" type="text" placeholder="Id Sensore" id="ids" name="ids" maxlength="50" value="<?php $ids=$_POST['ids']; if(isset($ids)===true){echo htmlspecialchars($ids);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="Tipo Sensore" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo htmlspecialchars($tipo);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="Marca Sensore" id="marca" name="marca" maxlength="50" value="<?php $marca=$_POST['marca']; if(isset($marca)===true){echo htmlspecialchars($marca);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="Nome Posizione" id="nomeposizione" name="nomeposizione" maxlength="50" value="<?php $nomeposizione=$_POST['nomeposizione']; if(isset($nomeposizione)===true){echo htmlspecialchars($nomeposizione);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
           <br/><br/>
           <button class="buttfiltro" name="filtroRilevazioni" value="filtroRilevazioni" type="submit" id="filtroRilevazioni">Ricerca</button>
           <button class="buttfiltro" name="scaricare" value="scaricare" type="submit" id="scaricare">Scarica pdf</button>
@@ -95,9 +95,9 @@
                                 if($data1===$data2){
                                 	$str = '<tr>';
                                     $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
-                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1],0,4)).'-'.substr(htmlspecialchars($row[1],4,2)).'-'.substr(htmlspecialchars($row[1],6,2)).'</td>';
-                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1],8,2)).':'.substr(htmlspecialchars($row[1],10,2)).'</td>';
-                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1],12)).'</td>';
+                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1]),0,4).'-'.substr(htmlspecialchars($row[1]),4,2).'-'.substr(htmlspecialchars($row[1]),6,2).'</td>';
+                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1]),8,2).':'.substr(htmlspecialchars($row[1]),10,2).'</td>';
+                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1]),12).'</td>';
                                     $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
                                     $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
                                     $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
@@ -108,9 +108,9 @@
                             }else{
                                 $str = '<tr>';
                                 $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
-                                $str = $str.'<td>'.substr(htmlspecialchars($row[1],0,4)).'-'.substr(htmlspecialchars($row[1],4,2)).'-'.substr(htmlspecialchars($row[1],6,2)).'</td>';
-                                $str = $str.'<td>'.substr(htmlspecialchars($row[1],8,2)).':'.substr(htmlspecialchars($row[1],10,2)).'</td>';
-                               	$str = $str.'<td>'.substr(htmlspecialchars($row[1],12)).'</td>';
+                                $str = $str.'<td>'.substr(htmlspecialchars($row[1]),0,4).'-'.substr(htmlspecialchars($row[1]),4,2).'-'.substr(htmlspecialchars($row[1]),6,2).'</td>';
+                                $str = $str.'<td>'.substr(htmlspecialchars($row[1]),8,2).':'.substr(htmlspecialchars($row[1]),10,2).'</td>';
+                               	$str = $str.'<td>'.substr(htmlspecialchars($row[1]),12).'</td>';
                                 $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
                                 $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
                                 $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
@@ -126,7 +126,7 @@
            <hr class="separator">
            <br />
            <span class='filtra'>Inserisci l'indirizzo email a cui inviare il pdf con i dati delle rilevazioni</span>
-           <input class="inputfiltro" type="text" placeholder="Email" id="email10" name="email10" maxlength="50" value="<?php $email10=$_POST['email10']; if(isset($email10)===true){echo $email10;}?>" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato corretto" />
+           <input class="inputfiltro" type="text" placeholder="Email" id="email10" name="email10" maxlength="50" value="<?php $email10=$_POST['email10']; if(isset($email10)===true){echo htmlspecialchars($email10);}?>" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato corretto" />
            <button class="buttfiltro" name="inviare" value="inviare" type="submit" id="inviare">Invia allegato</button>
          </form>
       </div>

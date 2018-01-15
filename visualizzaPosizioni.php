@@ -27,9 +27,9 @@
       <div class="contenitoreFiltri">
       	<form class="form"  action="visualizzaPosizioni.php" method="post">
           <span class="filtra"> Filtra per:</span>
-          <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
-          <input class="inputfiltro" type="text" placeholder="NomePosizione" id="nomeposizione" name="nomeposizione" maxlength="50" value="<?php $nomeposizione=$_POST['nomeposizione']; if(isset($nomeposizione)===true){echo $nomeposizione;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
-          <input class="inputfiltro" type="text" placeholder="ID_Impianto" id="impianto" name="impianto" maxlength="11" value="<?php $impianto=$_POST['impianto']; if(isset($impianto)===true){echo $impianto;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
+          <input class="inputfiltro" type="text" placeholder="NomePosizione" id="nomeposizione" name="nomeposizione" maxlength="50" value="<?php $nomeposizione=$_POST['nomeposizione']; if(isset($nomeposizione)===true){echo htmlspecialchars($nomeposizione);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
+          <input class="inputfiltro" type="text" placeholder="ID_Impianto" id="impianto" name="impianto" maxlength="11" value="<?php $impianto=$_POST['impianto']; if(isset($impianto)===true){echo htmlspecialchars($impianto);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" />
           <button class="buttfiltro" name="filtro" value="filtro" type="submit" id="filtro">Ricerca</button>
           <div class="positiontable">
            <table class="tabellaClienti">

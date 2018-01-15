@@ -27,11 +27,11 @@
       <div class="contenitoreFiltri">
       	<form class="form"  action="visualizzaImpianti.php" method="post">
           <span class="filtra"> Filtra per:</span>
-          <input class="inputfiltro" type="text" placeholder="IdImpianto" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
-          <input class="inputfiltro" type="text" placeholder="NomeImpianto" id="nomeimpianto" name="nomeimpianto" maxlength="50" value="<?php $nomeimpianto=$_POST['nomeimpianto']; if(isset($nomeimpianto)===true){echo $nomeimpianto;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
-          <input class="inputfiltro" type="text" placeholder="IdProprietario" id="idproprietario" name="idproprietario" maxlength="11" value="<?php $idproprietario=$_POST['idproprietario']; if(isset($idproprietario)===true){echo $idproprietario;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
-          <input class="inputfiltro" type="text" placeholder="Tipo" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo $tipo;}?>"  pattern="[A-Za-z]{0,50}" title="Deve contenere solo lettere"/>
-          <input class="inputfiltro" type="text" placeholder="Città" id="citta" name="citta" maxlength="50" value="<?php $citta=$_POST['citta']; if(isset($citta)===true){echo $citta;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composta da sole lettere" />
+          <input class="inputfiltro" type="text" placeholder="IdImpianto" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
+          <input class="inputfiltro" type="text" placeholder="NomeImpianto" id="nomeimpianto" name="nomeimpianto" maxlength="50" value="<?php $nomeimpianto=$_POST['nomeimpianto']; if(isset($nomeimpianto)===true){echo htmlspecialchars($nomeimpianto);}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
+          <input class="inputfiltro" type="text" placeholder="IdProprietario" id="idproprietario" name="idproprietario" maxlength="11" value="<?php $idproprietario=$_POST['idproprietario']; if(isset($idproprietario)===true){echo htmlspecialchars($idproprietario);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
+          <input class="inputfiltro" type="text" placeholder="Tipo" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo htmlspecialchars($tipo);}?>"  pattern="[A-Za-z]{0,50}" title="Deve contenere solo lettere"/>
+          <input class="inputfiltro" type="text" placeholder="Città" id="citta" name="citta" maxlength="50" value="<?php $citta=$_POST['citta']; if(isset($citta)===true){echo htmlspecialchars($citta);}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composta da sole lettere" />
           <button class="buttfiltro" name="filtro" value="filtro" type="submit" id="filtro">Ricerca</button>
           <div class="positiontable">
            <table class="tabellaClienti">

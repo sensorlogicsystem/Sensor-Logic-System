@@ -29,7 +29,7 @@
         	<tbody>
                 <tr>
                 	<td><span class="filtra2">ID Posizione</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID Posizione" id="idposizione" name="idposizione" maxlength="11" value="<?php $id=$_POST['idposizione']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID Posizione" id="idposizione" name="idposizione" maxlength="11" value="<?php $id=$_POST['idposizione']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
                 </tr>
             </tbody>
         </table>
@@ -39,7 +39,7 @@
               <tbody>
             	<tr>
                 	<td><span class="filtra2">Tipologia</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="Tipologia sensore" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo $tipo;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="Tipologia sensore" id="tipo" name="tipo" maxlength="50" value="<?php $tipo=$_POST['tipo']; if(isset($tipo)===true){echo htmlspecialchars($tipo);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                 </tr>
               </tbody>
           </table>
@@ -49,7 +49,7 @@
             	<tbody>
                     <tr>
                     	<td><span class="filtra2">Marca</span></td>
-                    	<td><input class="inputfiltro2" type="text" placeholder="Marca" id="marca" name="marca" maxlength="50" value="<?php $marca=$_POST['marca']; if(isset($marca)===true){echo $marca;}?>"  pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
+                    	<td><input class="inputfiltro2" type="text" placeholder="Marca" id="marca" name="marca" maxlength="50" value="<?php $marca=$_POST['marca']; if(isset($marca)===true){echo htmlspecialchars($marca);}?>"  pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                   	</tr>
                 </tbody>
             </table>
@@ -65,7 +65,7 @@
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
                 	$str = '<span class="filtra">Non è presente nessuna posizione con ID: '.$idposizione.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 } else {
                     $tipo= $_POST['tipo'];
                     $marca= $_POST['marca'];
@@ -98,7 +98,7 @@
         	<tbody>
             	<tr>
                 	<td><span class="filtra2">ID Sensore</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID sensore" id="id" name="id" maxlength="50" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID sensore" id="id" name="id" maxlength="50" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                 </tr>
 			</tbody>
 		</table>
@@ -117,14 +117,14 @@
                     $result = $conn->query($query);
                     if(!$result === false) {
                         $str = '<span class="filtra">Sensore rimosso con successo</span>';
-                        echo $str;
+                        echo htmlspecialchars($str);
                     } else {
                     	$str = '<span class="filtra">Sensore non rimosso, si è verifica un problema</span>';
-                        echo $str;
+                        echo htmlspecialchars($str);
                     }
                 } else {
                 	$str = '<span class="filtra">Sensore non rimosso, nessun sensore ha ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
             }
         ?>
@@ -140,7 +140,7 @@
         	<tbody>
             	<tr>
                 	<td><span class="filtra2">ID Sensore</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID Sensore" id="id2" name="id2" maxlength="50" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo $id;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID Sensore" id="id2" name="id2" maxlength="50" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                 </tr>
 			</tbody>
 		</table>
@@ -160,10 +160,10 @@
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
                 	$str = '<span class="filtra">Recuperati i dati del sensore con ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 } else {
                 	$str = '<span class="filtra">Non è presente nessun sensore con ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
             }
         ?>
@@ -188,7 +188,7 @@
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$idposizione=$_POST['idposizione2'];
                             		if(isset($idposizione)===true){
-                            			echo $idposizione;
+                            			echo htmlspecialchars($idposizione);
                            	 		}
                                 }
                        		?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
@@ -216,7 +216,7 @@
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$tipo=$_POST['tipo2'];
                             		if(isset($tipo)===true){
-                            			echo $tipo;
+                            			echo htmlspecialchars($tipo);
                            	 		}
                                 }
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
@@ -244,7 +244,7 @@
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$marca=$_POST['marca2'];
                             		if(isset($marca)===true){
-                            			echo $marca;
+                            			echo htmlspecialchars($marca);
                            	 		}
                                 }
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
@@ -269,10 +269,10 @@
                 $result = $conn->query($query);
 				if($result === false) {
                 	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 } else {
                 	$str = '<span class="filtra">Modifiche salvate con successo</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
         	}
         ?>
@@ -292,7 +292,7 @@
                 }
         	?> 
         >Salva i dati del sensore</button>
-        <input type="hidden" name="id2" id="id2" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo $id;}?>">
+        <input type="hidden" name="id2" id="id2" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo htmlspecialchars($id);}?>">
 	</form>
 </body>
 </html>

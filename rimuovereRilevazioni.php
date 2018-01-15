@@ -29,7 +29,7 @@
         	<tbody>
             	<tr>
                 	<td><span class="filtra2">ID Rilevaione</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID Rilevazione" id="id" name="id" maxlength="50" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID Rilevazione" id="id" name="id" maxlength="50" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                 </tr>
 			</tbody>
 		</table>
@@ -52,14 +52,14 @@
       
                     if(!$result === false) {
                         $str = '<span class="filtra">Rivelazione rimossa con successo</span>';
-                        echo $str;
+                        echo htmlspecialchars($str);
                     } else {
                     	$str = '<span class="filtra">Rivelazione non rimossa, si è verificato un problema</span>';
-                        echo $str;
+                        echo htmlspecialchars($str);
                     }
                 } else {
                 	$str = '<span class="filtra">Rivelazione non rimossa, nessuna rilevazione ha ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
             }
         ?>

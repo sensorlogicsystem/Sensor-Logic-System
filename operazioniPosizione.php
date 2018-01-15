@@ -29,7 +29,7 @@
         	<tbody>
                 <tr>
                 	<td><span class="filtra2">ID Impianto</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID Impianto" id="idimpianto" name="idimpianto" maxlength="11" value="<?php $id=$_POST['idimpianto']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID Impianto" id="idimpianto" name="idimpianto" maxlength="11" value="<?php $id=$_POST['idimpianto']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
                 </tr>
             </tbody>
         </table>
@@ -39,7 +39,7 @@
               <tbody>
             	<tr>
                 	<td><span class="filtra2">Nome posizione</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="Nome posizione" id="nomeposizione" name="nomeposizione" maxlength="50" value="<?php $nome=$_POST['nomeposizione']; if(isset($nome)===true){echo $nome;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="Nome posizione" id="nomeposizione" name="nomeposizione" maxlength="50" value="<?php $nome=$_POST['nomeposizione']; if(isset($nome)===true){echo htmlspecialchars($nome);}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                 </tr>
               </tbody>
           </table>
@@ -49,7 +49,7 @@
             	<tbody>
                     <tr>
                     	<td><span class="filtra2">Descrizione</span></td>
-                    	<td><input class="inputfiltro2" type="text" placeholder="Descrizione" id="descrizione" name="descrizione" maxlength="100" value="<?php $descrizione=$_POST['descrizione']; if(isset($descrizione)===true){echo $descrizione;}?>"/></td>
+                    	<td><input class="inputfiltro2" type="text" placeholder="Descrizione" id="descrizione" name="descrizione" maxlength="100" value="<?php $descrizione=$_POST['descrizione']; if(isset($descrizione)===true){echo htmlspecialchars($descrizione);}?>"/></td>
                   	</tr>
                 </tbody>
             </table>
@@ -65,7 +65,7 @@
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
                 	$str = '<span class="filtra">Non è presente nessun impianto con ID: '.$idimpianto.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 } else {
                     $nomeposizione= $_POST['nomeposizione'];
                     $descrizione= $_POST['descrizione'];
@@ -94,7 +94,7 @@
         	<tbody>
             	<tr>
                 	<td><span class="filtra2">ID Posizione</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID posizione" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID posizione" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
                 </tr>
 			</tbody>
 		</table>
@@ -113,14 +113,14 @@
                     $result = $conn->query($query);
                     if(!$result === false) {
                         $str = '<span class="filtra">Posizione rimossa con successo</span>';
-                        echo $str;
+                        echo htmlspecialchars($str);
                     } else {
                     	$str = '<span class="filtra">Posizione non rimossa, si è verifica un problema</span>';
-                        echo $str;
+                        echo htmlspecialchars($str);
                     }
                 } else {
                 	$str = '<span class="filtra">Posizione non rimossa, nessuna posizione ha ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
             }
         ?>
@@ -136,7 +136,7 @@
         	<tbody>
             	<tr>
                 	<td><span class="filtra2">ID Posizione</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="ID Posizione" id="id2" name="id2" maxlength="11" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo $id;}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
+                    <td><input class="inputfiltro2" type="text" placeholder="ID Posizione" id="id2" name="id2" maxlength="11" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
                 </tr>
 			</tbody>
 		</table>
@@ -156,10 +156,10 @@
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
                 	$str = '<span class="filtra">Recuperati i dati della posizione con ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 } else {
                 	$str = '<span class="filtra">Non è presente nessuna posizione con ID: '.$id.'</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
             }
         ?>
@@ -184,7 +184,7 @@
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$idimpianto=$_POST['idimpianto2'];
                             		if(isset($idimpianto)===true){
-                            			echo $idimpianto;
+                            			echo htmlspecialchars($idimpianto);
                            	 		}
                                 }
                        		?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
@@ -212,7 +212,7 @@
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$nome=$_POST['nomeposizione2'];
                             		if(isset($nome)===true){
-                            			echo $nome;
+                            			echo htmlspecialchars($nome);
                            	 		}
                                 }
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
@@ -240,7 +240,7 @@
                                 } elseif(isset($_POST['salvare'])===true) {
                                 	$descrizione=$_POST['descrizione2'];
                             		if(isset($descrizione)===true){
-                            			echo $descrizione;
+                            			echo htmlspecialchars($descrizione);
                            	 		}
                                 }
                        		?>" /></td>
@@ -261,10 +261,10 @@
                 $result = $conn->query($query);
 				if($result === false) {
                 	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 } else {
                 	$str = '<span class="filtra">Modifiche salvate con successo</span>';
-                    echo $str;
+                    echo htmlspecialchars($str);
                 }
         	}
         ?>
@@ -284,7 +284,7 @@
                 }
         	?> 
         >Salva i dati della posizione</button>
-        <input type="hidden" name="id2" id="id2" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo $id;}?>">
+        <input type="hidden" name="id2" id="id2" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo htmlspecialchars($id);}?>">
 	</form>
 </body>
 </html>
