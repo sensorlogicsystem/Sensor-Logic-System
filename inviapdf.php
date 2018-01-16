@@ -44,6 +44,7 @@ define('FPDF_FONTPATH','./font/');
 require('fpdf.php');
 ob_end_clean();
 ob_start();
+include_once "OperazioniPDF.php";
 class PDF extends FPDF
 {
 // Page header
@@ -128,27 +129,10 @@ $p->Write(5, $msg);
 $msg="Rilevazioni dell"."'"."impianto ".$impianto;
 $p->Write(5, $msg);
 $msg='';
-if(empty($idr)===false || empty($data)===false || empty($ids)===false || empty($tipo)===false || empty($marca)===false || empty($nomeposizione)===false){
-	$msg="\n".'Filtrate per:  ';  
-}
-if(empty($idr)===false){
-	$msg=$msg.'  Id Rilevazione:'.$idr;
-}
-if(empty($date)===false){
-	$msg=$msg.'  Data Rilevazione:'.$date;
-}
-if(empty($ids)===false){
-	$msg=$msg.'  Id Sensore:'.$ids;
-}
-if(empty($tipo)===false){
-	$msg=$msg.'  Tipo Sensore:'.$tipo;
-}
-if(empty($marca)===false){
-	$msg=$msg.'  Marca Sensore:'.$marca;
-}
-if(empty($nomeposizione)===false){
-	$msg=$msg.'  Nome Posizione:'.$nomeposizione;
-}
+
+$objmsg=new OperazioniPDF();
+$msg = $objmsg->intestazionePdf($date, $idr, $ids, $tipo, $nomeposizione, $marca);
+
 $p->Write(5, $msg);
 $p->Write(5, "\n\n");
 $header = array('ID Rilevazione', 'Data rilevazione', 'Orario rilevazione', 'Valore rilevazione', 'ID Sensore', 'Tipologia sensore', 'Marca sensore', 'Posizione');
@@ -200,4 +184,4 @@ if($result === true) {
 } else {
 	header('Location: http://sensorlogicsystemlogin.altervista.org/visualizzaRilevazioni.php?msg=failed');
 }
-?>
+?>

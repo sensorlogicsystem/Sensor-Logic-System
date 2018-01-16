@@ -1,4 +1,5 @@
 <?php
+    include_once 'Layout.php';
 	require 'config.php';
     
 	session_start();
@@ -24,78 +25,10 @@
 	<form class="form"  action="operazioniAmministratori.php" method="post">
     	<br />
     	<span class="visClient">Registrare un nuovo amministratore</span><br /><br /><br />
-        <div class= "contenitorecolonna">
-        <table class="tabellacolonna">
-        	<tbody>
-            	<tr>
-                	<td><span class="filtra2">Nome</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="Nome" id="nome" name="nome" maxlength="50" value="<?php $nome=$_POST['nome']; if(isset($nome)===true){echo $nome;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required/></td>
-                </tr>
-                <tr>
-                	<td><span class="filtra2">Cognome</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="Cognome" id="cognome" name="cognome" maxlength="50" value="<?php $cognome=$_POST['cognome']; if(isset($cognome)===true){echo $cognome;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required/></td>
-                </tr>
-                <tr>
-                	<td><span class="filtra2">CF</span></td>
-                    <td><input class="inputfiltro2" type="text" placeholder="CF" id="cf" name="cf" maxlength="16" value="<?php $cf=$_POST['cf']; if(isset($cf)===true){echo $cf;}?>" pattern= "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" title="Deve essere composto da 16 valori, seguendo il formato del cofice fiscale" required/></td>
-                </tr>
-                <tr>
-                	<td><span class="filtra2">Sesso</span></td>
-                    <td>
-                    	<select name="sesso" id="sesso" class="sesso" title="Selezionare il sesso" required>
-  							<option value="m" <?php $sesso=$_POST['sesso']; if($sesso==="m"){echo 'selected="selected"';}?>>M</option>
-  							<option value="f" <?php $sesso=$_POST['sesso']; if($sesso==="f"){echo 'selected="selected"';}?>>F</option>
-						</select> 
-                	</td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-        <div class= "contenitorecolonna">
-          <table  class="tabellacolonna">
-              <tbody>
-                  <tr>
-                      <td><span class="filtra2">Telefono</span></td>
-                      <td> <input class="inputfiltro2" type="text" placeholder="Telefono" id="telefono" name="telefono" maxlength="10" value="<?php $telefono=$_POST['telefono']; if(isset($telefono)===true){echo $telefono;}?>" pattern= "[0-9]{0,10}" title="Deve essere composto da soli 10 numeri" required/></td>
-                  </tr>
-                  <tr>
-                      <td><span class="filtra2">Email</span></td>
-                      <td><input class="inputfiltro2" type="text" placeholder="Email" id="email" name="email" maxlength="50" value="<?php $email=$_POST['email']; if(isset($email)===true){echo $email;}?>" pattern= "[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com" required/></td>
-                  </tr>
-                  <tr>
-                      <td><span class="filtra2">Data di nascita</span></td>
-                      <td> <input class="inputfiltro2" type="date" placeholder="Data di nascita" id="datadinascita" name="datadinascita" value="<?php $datadinascita=$_POST['datadinascita']; if(isset($datadinascita)===true){echo $datadinascita;}?>" title="Deve contenere una data valida" min="1900-01-01" max="2000-01-01" required/></td>
-                  </tr>
-                  <tr>
-                      <td><span class="filtra2">CAP</span></td>
-                      <td>  <input class="inputfiltro2" type="text" placeholder="CAP" id="cap" name="cap" maxlength="5" value="<?php $cap=$_POST['cap']; if(isset($cap)===true){echo $cap;}?>" pattern= "[0-9]{0,5}" title="Deve essere composto da soli 5 numeri" required/></td>
-                  </tr>
-              </tbody>
-          </table>
-        </div>
-        
-         <div class= "contenitorecolonna">
-         	<table  class="tabellacolonna">
-            	<tbody>
-                	<tr>
-                    	<td><span class="filtra2">Città</span></td>
-                        <td> <input class="inputfiltro2" type="text" placeholder="citta" id="citta" name="citta" maxlength="50" value="<?php $citta=$_POST['citta']; if(isset($citta)===true){echo $citta;}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere"  required/></td>
-                    </tr>
-                    <tr>
-                    	<td><span class="filtra2">Indirizzo</span></td>
-                        <td><input class="inputfiltro2" type="text" placeholder="indirizzo" id="indirizzo" name="indirizzo" maxlength="50" value="<?php $indirizzo=$_POST['indirizzo']; if(isset($indirizzo)===true){echo $indirizzo;}?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
-                    </tr>
-                    <tr>
-                    	<td><span class="filtra2">N°Civico</span></td>
-                        <td><input class="inputfiltro2" type="text" placeholder="numcivico" id="numcivico" name="numcivico" maxlength="50" value="<?php $numcivico=$_POST['numcivico']; if(isset($numcivico)===true){echo $numcivico;}?>" pattern="[a-zA-Z0-9]+{0,50}"title="Deve essere composta da lettere e/o numeri" required/></td>
-                    </tr>
-                    <tr>
-                    	<td><span class="filtra2">Provincia</span></td>
-                        <td><input class="inputfiltro2" type="text" placeholder="Provincia" id="provincia" name="provincia" maxlength="2" value="<?php $provincia=$_POST['provincia']; if(isset($provincia)===true){echo $provincia;}?>" pattern= "[A-Za-z]{0,2}" title="Deve contenere 2 lettere" required/></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <?php
+        $layout = new Layout();
+        echo $layout->layoutop($nome, $cognome, $cf, $sesso, $telefono, $email, $datadinascita, $cap, $citta, $indirizzo, $numcivico, $provincia);
+        ?>
         
         <?php
         	require 'config.php';
@@ -606,4 +539,4 @@
         <input type="hidden" name="id2" id="id2" value="<?php $id=$_POST['id2']; if(isset($id)===true){echo $id;}?>">
 	</form>
 </body>
-</html>
+</html>
