@@ -118,7 +118,9 @@ $p->Write(5, "\n\n");
 $header = array('ID Rilevazione', 'Data rilevazione', 'Orario rilevazione', 'Valore rilevazione', 'ID Sensore', 'Tipologia sensore', 'Marca sensore', 'Posizione');
 
 $querypdf= new OperazioniPDF();
-$query= $querypdf->queryPdf($date, $idr, $ids, $tipo, $nomeposizione, $marca, $impianto, $email);
+$query= $querypdf->queryPdf($idr, $ids, $tipo, $nomeposizione, $marca, $impianto, $email);
+
+
 
 $conn = new mysqli($servername, $user, $pass, $database);
 $result = $conn->query($query);
