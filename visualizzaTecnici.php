@@ -57,12 +57,20 @@
                     <?php
                     	require 'config.php';
                         
-                        $id=$_POST['id'];
-                        $nome=$_POST['nome'];
-                        $cognome=$_POST['cognome'];
-                        $email=$_POST['email'];
-                        $citta=$_POST['città'];
+                        $id ='';
+                        $nome = '';
+                        $cognome = '';
+                        $email = '';
+                        $citta = '';
                         
+                        if(isset($_POST['id']) === true || isset($_POST['nome']) === true ||  isset($_POST['cognome']) === true ||  isset($_POST['email']) === true ||  isset($_POST['citta']) === true){
+                        	$id=$_POST['id'];
+                        	$nome=$_POST['nome'];
+                        	$cognome=$_POST['cognome'];
+                        	$email=$_POST['email'];
+                        	$citta=$_POST['città'];
+                        }
+                       
                         $query = sprintf("select * from utente inner join credenziale on id=utente where permesso='t'");
                         if(!empty($id)) {
                         	$query = $query.sprintf(" and id = ".$id);
