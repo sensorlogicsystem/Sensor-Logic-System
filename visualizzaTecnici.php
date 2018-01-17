@@ -90,7 +90,7 @@
                          $query=$query.sprintf(" order by utente.id");
                         
                         $conn = new mysqli($servername, $user, $pass, $database);
-                        if(empty($query) === false){
+                        if(isset($id) === true || isset($nome) === true ||  isset($cognome) === true ||  isset($email) === true ||  isset($citta) === true){
                         	$result = $conn->query($query);
                         }
                         
