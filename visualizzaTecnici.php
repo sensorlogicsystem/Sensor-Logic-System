@@ -25,7 +25,7 @@
 	<span class="visClient">Visualizza Tecnici</span>
     <br /><br />
       <div class="contenitoreFiltri">
-      	<form class="form"  action="visualizzaAmministratori.php" method="post">
+      	<form class="form"  action="visualizzaTecnici.php" method="post">
           <span class="filtra"> Filtra per:</span>
           <input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="11" value="<?php $id=$_POST['id']; if(isset($id)===true){echo htmlspecialchars($id);}?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />
           <input class="inputfiltro" type="text" placeholder="Nome" id="nome" name="nome" maxlength="50" value="<?php $nome=$_POST['nome']; if(isset($nome)===true){echo htmlspecialchars($nome);}?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />
@@ -90,7 +90,10 @@
                          $query=$query.sprintf(" order by utente.id");
                         
                         $conn = new mysqli($servername, $user, $pass, $database);
-                        $result = $conn->query($query);
+                        if(empty($query) === false){
+                        	$result = $conn->query($query);
+                        }
+                        
                         
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);
