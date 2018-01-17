@@ -46,10 +46,16 @@
     <?php
     	if(isset($_POST['invia'])===true){
         		session_start();
+                
+                $regexemail = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+                
         		$mail_mittente = $_SESSION['email'];
                 $mail_oggetto = 'SupportoCliente';
-                $mail_headers = 'From: ' .  $mail_mittente . '>\r\n';
-                $mail_headers .= 'Reply-To: ' .  $mail_mittente . '\r\n';
+                $mail_headers = '';
+                if (preg_match($regexemail, $mail_mittente) === 1) {
+                    $mail_headers = 'From: ' .  $mail_mittente . '>\r\n';
+               		$mail_headers .= 'Reply-To: ' .  $mail_mittente . '\r\n';
+                }	                          
 
                 $mail_destinatario = 'sensorlogicsystem@gmail.com';
                 $result = false;
@@ -60,7 +66,6 @@
                 	$mail_corpo=$_POST['text'];
                 }
 
-                $regexemail = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
                 $send = false;
 
                 if (preg_match($regexemail, $mail_destinatario) === 1) {
