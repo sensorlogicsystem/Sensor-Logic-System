@@ -4,8 +4,8 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -20,7 +20,7 @@
     $countTipo=array();
     
     $conn = new mysqli($servername, $user, $pass, $database);
-    $query=sprintf("SELECT sensore.tipo, count(sensore.tipo) FROM sensore inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto='".$impianto."' and email ='".$email."' group by sensore.tipo order by count(sensore.tipo) desc");
+    $query=sprintf("SELECT sensore.tipo, count(sensore.tipo) FROM sensore inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto='%s' and email ='%s' group by sensore.tipo order by count(sensore.tipo) desc",mysqli_real_escape_string($conn, $impianto),mysqli_real_escape_string($conn, $email));
     $result=$conn->query($query);
    
     if($result->num_rows>=5){

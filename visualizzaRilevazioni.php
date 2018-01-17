@@ -4,8 +4,8 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -65,7 +65,7 @@
                         $marca=$_POST['marca'];
                         $nomeposizione=$_POST['nomeposizione'];
                         
-                        $query = sprintf("SELECT rilevazione.id, rilevazione.rilevazione, sensore.id, sensore.tipo, sensore.marca, posizione.nomeposizione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto ='".$impianto."' and credenziale.email='".$email."' ");
+                        $query = sprintf("SELECT rilevazione.id, rilevazione.rilevazione, sensore.id, sensore.tipo, sensore.marca, posizione.nomeposizione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto ='%s' and credenziale.email='%s' ",mysqli_real_escape_string($conn, $impianto),mysqli_real_escape_string($conn, $email));
                         if(!empty($idr)) {
                         	$query = $query.sprintf(" and  rilevazione.id= ".$idr);
                         }
@@ -127,10 +127,13 @@
            <br />
            <span class='filtra'>Inserisci l'indirizzo email a cui inviare il pdf con i dati delle rilevazioni</span>
            <input class="inputfiltro" type="text" placeholder="Email" id="email10" name="email10" maxlength="50" value="<?php $email10=$_POST['email10']; if(isset($email10)===true){echo htmlspecialchars($email10);}?>" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato corretto" />
-           <button class="buttfiltro" name="inviare" value="inviare" type="submit" id="inviare">Invia allegato</button>
+           <button class="buttfiltro" name="inviare" value="inviare" type="submit" id="inviare">invia pdf</button>
+         
+            
          </form>
       </div>
                   	<?php
+                  
                 $str = '<div id="error" class="filtra">Impossibile inviare l'."'".'email</div>';
                 
                 if (isset($_GET['msg']) === true && $_GET['msg'] === 'failed') {
@@ -145,6 +148,7 @@
 				}
            		?>
       <?php
+     
       	if(isset($_POST['scaricare'])===true){
         	$_SESSION['idr']=$_POST['idr'];
         	$_SESSION['data']=$_POST['data'];
@@ -156,14 +160,18 @@
         }        
       ?>
       <?php
+      
       	if(isset($_POST['inviare'])===true){
+        var_dump($_POST['inviare']);
+        session_start();
         	$_SESSION['idr']=$_POST['idr'];
         	$_SESSION['data']=$_POST['data'];
             $_SESSION['ids']=$_POST['ids'];
             $_SESSION['tipo']=$_POST['tipo'];
             $_SESSION['marca']=$_POST['marca'];
             $_SESSION['nomeposizione']=$_POST['nomeposizione'];
-            $_SESSION['destinatario']=$_POST['email2'];
+            $_SESSION['destinatario']=$_POST['email10'];
+            
             header("location:inviapdf.php");
         }        
       ?>

@@ -4,8 +4,8 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'", mysqli_real_escape_string($conn, $email), mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -35,7 +35,7 @@ require 'config.php';
                         
                         
     $conn = new mysqli($servername, $user, $pass, $database);
-    $query=sprintf("SELECT sensore.tipo, count(sensore.tipo) FROM sensore inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto='".$impianto."' and email ='".$email."' group by sensore.tipo order by count(sensore.tipo) desc");
+    $query=sprintf("SELECT sensore.tipo, count(sensore.tipo) FROM sensore inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto='%s' and email ='%s' group by sensore.tipo order by count(sensore.tipo) desc", mysqli_real_escape_string($conn, $impianto), mysqli_real_escape_string($conn, $email));
     $result=$conn->query($query);
     $countTipo=$result->num_rows;
     if($countTipo>=5){
@@ -51,7 +51,7 @@ require 'config.php';
     }
     
     for($i=0;$i<$countTipo;$i++){
-    	$query=sprintf("select rilevazione from rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='".$impianto."' and email='".$email."' and sensore.tipo='".$tipo[$i]."'");
+    	$query=sprintf("select rilevazione from rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='%s' and email='%s' and sensore.tipo='%s'", mysqli_real_escape_string($conn, $impianto), mysqli_real_escape_string($conn, $email), mysqli_real_escape_string($conn, $tipo[$i]));
     	$result = $conn->query($query);
         $rilevazioni[$i]=0;
          for($l=0; $l<$result->num_rows; $l++){

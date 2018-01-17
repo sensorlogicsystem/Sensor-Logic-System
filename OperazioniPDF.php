@@ -49,4 +49,4 @@ class OperazioniPDF{
         return $query;
     }
 }
-?>
+?>

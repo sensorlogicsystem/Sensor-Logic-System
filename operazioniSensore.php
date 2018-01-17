@@ -4,8 +4,8 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),  mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -60,7 +60,7 @@
         	
         	if(isset($_POST['aggiungere'])===true){
             	$idposizione = $_POST['idposizione'];
-            	$query=sprintf("SELECT * from posizione WHERE id=".$idposizione);
+            	$query=sprintf("SELECT * from posizione WHERE id='%s'".$idposizione,mysqli_real_escape_string($conn, $idposizione));
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
@@ -69,11 +69,11 @@
                 } else {
                     $tipo= $_POST['tipo'];
                     $marca= $_POST['marca'];
-                    $query=sprintf("select* from sensore where tipo='".$tipo."' and marca ='".$marca."'");
+                    $query=sprintf("select * from sensore where tipo='%s' and marca ='%s'",mysqli_real_escape_string($conn, $tipo),  mysqli_real_escape_string($conn, $marca));
                     $result = $conn->query($query);
                     $count=$result->num_rows+1;
                     $id=substr($tipo, 0,3).substr($marca,0,3).$count;
-                	$query=sprintf("insert into sensore (id, tipo, marca, posizione) values ('".$id."','".$tipo."','".$marca."',".$idposizione.")");
+                	$query=sprintf("insert into sensore (id, tipo, marca, posizione) values ('%s','%s','%s','%s')",mysqli_real_escape_string($conn, $id),  mysqli_real_escape_string($conn, $tipo),mysqli_real_escape_string($conn, $marca),  mysqli_real_escape_string($conn, $idposizione));
                 	$result = $conn->query($query);
                     if($result === false){
                     	$str = '<span class="filtra">Registrazione non riuscita</span>';
@@ -109,11 +109,11 @@
         	
         	if(isset($_POST['rimuovere'])===true){
             	$id = $_POST['id'];
-                $query=sprintf("SELECT * FROM sensore WHERE id='".$id."'");
                 $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id));
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	$query=sprintf("DELETE FROM sensore WHERE id='".$id."'");
+                	$query=sprintf("DELETE FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id));
                     $result = $conn->query($query);
                     if(!$result === false) {
                         $str = '<span class="filtra">Sensore rimosso con successo</span>';
@@ -155,8 +155,8 @@
             
             if(isset($_POST['recuperare'])===true){
             	$id = $_POST['id2'];
-                $query=sprintf("SELECT * FROM sensore WHERE id='".$id."'");
                 $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id));
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
                 	$str = '<span class="filtra">Recuperati i dati del sensore con ID: '.$id.'</span>';
@@ -178,8 +178,9 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM sensore WHERE id='".$_POST['id2']."'");
-                					$conn = new mysqli($servername, $user, $pass, $database);
+                                	$id2 = $_POST['id2'];
+                                    $conn = new mysqli($servername, $user, $pass, $database);
+                                	$query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id2));
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
@@ -206,8 +207,9 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM sensore WHERE id='".$_POST['id2']."'");
-                					$conn = new mysqli($servername, $user, $pass, $database);
+                                	$id2 = $_POST['id2'];
+                                    $conn = new mysqli($servername, $user, $pass, $database);
+                                	$query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id2));                					
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
@@ -234,8 +236,9 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM sensore WHERE id='".$_POST['id2']."'");
-                					$conn = new mysqli($servername, $user, $pass, $database);
+                                	$id2 = $_POST['id2'];
+                                	$conn = new mysqli($servername, $user, $pass, $database);
+                                	$query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id2));                					
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
@@ -259,13 +262,14 @@
                 $idposizione = $_POST['idposizione2'];
                 $tipo= $_POST['tipo2'];
                 $marca= $_POST['marca2'];
-                $query=sprintf("select* from sensore where tipo='".$tipo."' and marca ='".$marca."'");
+                $query=sprintf("select* from sensore where tipo='%s' and marca ='%s'",mysqli_real_escape_string($conn, $tipo),mysqli_real_escape_string($conn, $marca));
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 $count=$result->num_rows+1;
                 $id=substr($tipo, 0,3).substr($marca,0,3).$count;
-            	$query=sprintf("UPDATE sensore SET id='".$id."', tipo='".$tipo."', marca='".$marca."', posizione=".$idposizione." WHERE id='".$_POST['id2']."'");
+                $id2 = $_POST['id2'];
                 $conn = new mysqli($servername, $user, $pass, $database);
+            	$query=sprintf("UPDATE sensore SET id='%s, tipo='%s', marca='%s', posizione='%s' WHERE id='%s'",mysqli_real_escape_string($conn, $id),mysqli_real_escape_string($conn, $tipo),mysqli_real_escape_string($conn, $marca),mysqli_real_escape_string($conn, $idposizione),mysqli_real_escape_string($conn, $id2));       
                 $result = $conn->query($query);
 				if($result === false) {
                 	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
@@ -284,7 +288,7 @@
                 if(isset($id)===false){
                 	echo ' disabled ';
                 }
-                $query=sprintf("SELECT * FROM sensore WHERE id='".$id."'");
+                $query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id));
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows !== 1){

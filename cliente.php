@@ -4,8 +4,9 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
+
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -40,7 +41,7 @@
                         $conn = new mysqli($servername, $user, $pass, $database);
                         
                     	$email=$_SESSION['email'];
-                        $query=sprintf("SELECT nomeimpianto from credenziale inner join utente on credenziale.utente=utente.id inner join impianto on utente.id=impianto.proprietario where email='".$email."' order by nomeimpianto");
+                        $query=sprintf("SELECT nomeimpianto from credenziale inner join utente on credenziale.utente=utente.id inner join impianto on utente.id=impianto.proprietario where email='%s' order by nomeimpianto",mysqli_real_escape_string($conn, $email));
                         $result=$conn->query($query);
                         $count=$result->num_rows;
                         if($count===0){

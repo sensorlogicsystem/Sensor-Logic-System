@@ -4,8 +4,8 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'", mysqli_real_escape_string($conn, $email), mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -60,8 +60,8 @@
         	
         	if(isset($_POST['aggiungere'])===true){
             	$idimpianto = $_POST['idimpianto'];
-            	$query=sprintf("SELECT * from impianto WHERE id=".$idimpianto);
                 $conn = new mysqli($servername, $user, $pass, $database);
+            	$query=sprintf("SELECT * from impianto WHERE id='%s'", mysqli_real_escape_string($conn, $idimpianto));
                 $result = $conn->query($query);
             	if($result->num_rows === 0){
                 	$str = '<span class="filtra">Non è presente nessun impianto con ID: '.$idimpianto.'</span>';
@@ -69,7 +69,7 @@
                 } else {
                     $nomeposizione= $_POST['nomeposizione'];
                     $descrizione= $_POST['descrizione'];
-                	$query=sprintf("insert into posizione (nomeposizione, descrizione, impianto) values ('".$nomeposizione."','".$descrizione."',".$idimpianto.")");
+                	$query=sprintf("insert into posizione (nomeposizione, descrizione, impianto) values ('%s','%s','%s')", mysqli_real_escape_string($conn, $nomeposizione), mysqli_real_escape_string($conn, $descrizione), mysqli_real_escape_string($conn, $idimpianto));
                 	$result = $conn->query($query);
                     if($result === false){
                     	$str = '<span class="filtra">Registrazione non riuscita</span>';
@@ -105,11 +105,11 @@
         	
         	if(isset($_POST['rimuovere'])===true){
             	$id = $_POST['id'];
-                $query=sprintf("SELECT * FROM posizione WHERE id=".$id);
                 $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));                
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	$query=sprintf("DELETE FROM posizione WHERE id=".$id);
+                	$query=sprintf("DELETE FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));
                     $result = $conn->query($query);
                     if(!$result === false) {
                         $str = '<span class="filtra">Posizione rimossa con successo</span>';
@@ -151,8 +151,8 @@
             
             if(isset($_POST['recuperare'])===true){
             	$id = $_POST['id2'];
-                $query=sprintf("SELECT * FROM posizione WHERE id=".$id);
                 $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));                
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
                 	$str = '<span class="filtra">Recuperati i dati della posizione con ID: '.$id.'</span>';
@@ -174,8 +174,9 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM posizione WHERE id=".$_POST['id2']);
-                					$conn = new mysqli($servername, $user, $pass, $database);
+                                	$id2 = $_POST['id2'];
+                                    $conn = new mysqli($servername, $user, $pass, $database);
+                                	$query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id2));                					
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
@@ -202,8 +203,9 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM posizione WHERE id=".$_POST['id2']);
-                					$conn = new mysqli($servername, $user, $pass, $database);
+                                	$id2 = $_POST['id2'];
+                                    $conn = new mysqli($servername, $user, $pass, $database);
+                                	$query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id2));                					
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
@@ -230,8 +232,9 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM posizione WHERE id=".$_POST['id2']);
-                					$conn = new mysqli($servername, $user, $pass, $database);
+                                	$id2 = $_POST['id2'];
+                                    $conn = new mysqli($servername, $user, $pass, $database);
+                                	$query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id2));                					
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
@@ -255,9 +258,9 @@
                 $idimpianto = $_POST['idimpianto2'];
                 $nomeposizione= $_POST['nomeposizione2'];
                 $descrizione= $_POST['descrizione2'];
-                
-            	$query=sprintf("UPDATE posizione SET nomeposizione='".$nomeposizione."', descrizione='".$descrizione."', impianto=".$idimpianto." WHERE id=".$_POST['id2']);
+                $id2=$_POST['id2'];
                 $conn = new mysqli($servername, $user, $pass, $database);
+            	$query=sprintf("UPDATE posizione SET nomeposizione='%s', descrizione='%s', impianto='%s' WHERE id='%s'", mysqli_real_escape_string($conn, $nomeposizione), mysqli_real_escape_string($conn, $descrizione), mysqli_real_escape_string($conn, $idimpianto), mysqli_real_escape_string($conn, $id2));                
                 $result = $conn->query($query);
 				if($result === false) {
                 	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
@@ -276,7 +279,7 @@
                 if(isset($id)===false){
                 	echo ' disabled ';
                 }
-                $query=sprintf("SELECT * FROM posizione WHERE id=".$id);
+                $query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows !== 1){

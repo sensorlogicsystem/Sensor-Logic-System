@@ -4,8 +4,8 @@
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
     $conn = new mysqli($servername, $user, $pass, $database);
+    $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
     if($result === false || $result->num_rows != 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
@@ -41,13 +41,12 @@
             $email=$_SESSION['email'];
             $impianto=$_SESSION['impianto'];
         	if(isset($_POST['rimuovere'])===true){
-            	
+            	$conn = new mysqli($servername, $user, $pass, $database);
             	$id = $_POST['id'];
-                $query=sprintf("SELECT * FROM rilevazione WHERE id=".$id);
-                $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf("SELECT * FROM rilevazione WHERE id='%s'",mysqli_real_escape_string($conn, $id));
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	$query=sprintf("delete rilevazione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where rilevazione.id=".$id." and impianto.nomeimpianto ='".$impianto."' and credenziale.email='".$email."'");
+                	$query=sprintf("delete rilevazione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where rilevazione.id='%s' and impianto.nomeimpianto ='%s' and credenziale.email='%s'",mysqli_real_escape_string($conn, $id),mysqli_real_escape_string($conn, $impianto),mysqli_real_escape_string($conn, $email));
                     $result = $conn->query($query);
       
                     if(!$result === false) {
