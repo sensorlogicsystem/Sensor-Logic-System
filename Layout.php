@@ -1,6 +1,6 @@
 <?php
 class Layout{
-    function layoutop($nome, $cognome, $cf, $sesso, $telefono, $email, $datadinascita, $cap, $citta, $indirizzo, $numcivico, $provincia){
+    function layoutop($nome, $cognome, $cf, $sesso, $telefono, $email, $datadinascita){
         $sessoM='';
         $sessoF='';
         if(isset($nome)===false){$nome='';}
@@ -12,11 +12,7 @@ class Layout{
         if(isset($telefono)===false){$telefono='';}
         if(isset($email)===false){$email='';}
         if(isset($datadinascita)===false){$datadinascita= '';}
-        if(isset($cap)===false){$cap='';}
-        if(isset($citta)===false){$citta='';}
-        if(isset($indirizzo)===false){$indirizzo='';}
-        if(isset($numcivico)===false){$numcivico='';}
-        if(isset($provincia)===false){$provincia='';}
+        
         $var='';
         $var=$var.'<div class= "contenitorecolonna">';
         $var=$var.'<table class="tabellacolonna">';
@@ -60,6 +56,18 @@ class Layout{
         $var=$var.'<td><span class="filtra2">Data di nascita</span></td>';
         $var=$var.'<td> <input class="inputfiltro2" type="date" placeholder="Data di nascita" id="datadinascita" name="datadinascita" value="'.$datadinascita.'" title="Deve contenere una data valida" min="1900-01-01" max="2000-01-01" required/></td>';
         $var=$var.'</tr>';
+        
+        return $var;
+    }
+    function layoubot($cap, $citta, $indirizzo, $numcivico, $provincia){
+    	if(isset($cap)===false){$cap='';}
+        if(isset($citta)===false){$citta='';}
+        if(isset($indirizzo)===false){$indirizzo='';}
+        if(isset($numcivico)===false){$numcivico='';}
+        if(isset($provincia)===false){$provincia='';}
+    	
+        $var='';
+        
         $var=$var.'<tr>';
         $var=$var.'<td><span class="filtra2">CAP</span></td>';
         $var=$var.'<td>  <input class="inputfiltro2" type="text" placeholder="CAP" id="cap" name="cap" maxlength="5" value="'.$cap.'" pattern= "[0-9]{0,5}" title="Deve essere composto da soli 5 numeri" required/></td>';
@@ -90,8 +98,8 @@ class Layout{
         $var=$var.'</tbody>';
         $var=$var.'</table>';
         $var=$var.' </div>';
-
-        return $var;
+        
+        return $var;    
     }
 }
 ?>

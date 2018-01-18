@@ -29,7 +29,8 @@
     	<span class="visClient">Registrare un nuovo tecnico</span><br /><br /><br />
         <?php
         $layout = new Layout();
-        echo $layout->layoutop(htmlspecialchars($_POST['nome']), htmlspecialchars($_POST['cognome']), htmlspecialchars($_POST['cf']), htmlspecialchars($_POST['sesso']), htmlspecialchars($_POST['telefono']), htmlspecialchars($_POST['email']), htmlspecialchars($_POST['datadinascita']), htmlspecialchars($_POST['cap']), htmlspecialchars($_POST['citta']), htmlspecialchars($_POST['indirizzo']), htmlspecialchars($_POST['numcivico']), htmlspecialchars($_POST['provincia']));
+        echo $layout->layoutop(htmlspecialchars($_POST['nome']), htmlspecialchars($_POST['cognome']), htmlspecialchars($_POST['cf']), htmlspecialchars($_POST['sesso']), htmlspecialchars($_POST['telefono']), htmlspecialchars($_POST['email']), htmlspecialchars($_POST['datadinascita']));
+        echo $layout->layoubot(htmlspecialchars($_POST['cap']), htmlspecialchars($_POST['citta']), htmlspecialchars($_POST['indirizzo']), htmlspecialchars($_POST['numcivico']), htmlspecialchars($_POST['provincia']));
         ?>
         
         <?php

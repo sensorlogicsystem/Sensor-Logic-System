@@ -41,7 +41,7 @@ $nomeposizione = $_SESSION['nomeposizione'];
 define('FPDF_FONTPATH','./font/');
  
 //questo file e la cartella font si trovano nella stessa directory
-require('fpdf.php');
+require 'fpdf.php';
 ob_end_clean();
 ob_start();
 include_once "OperazioniPDF.php";

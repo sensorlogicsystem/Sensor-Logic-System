@@ -16,7 +16,6 @@ if(!isset($_SESSION['email']) === true) {
 
 if($result->num_rows === 1) {
 	session_start();
-    $_SESSION["csrf"] = md5(uniqid(mt_rand(), true));
 	$_SESSION['email'] = $email;
 	$_SESSION['password'] = $password;
     $row = mysqli_fetch_row($result);
