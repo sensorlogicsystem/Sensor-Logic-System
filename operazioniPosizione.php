@@ -62,7 +62,10 @@
             	$idimpianto = $_POST['idimpianto'];
                 $conn = new mysqli($servername, $user, $pass, $database);
             	$query=sprintf("SELECT * from impianto WHERE id='%s'", mysqli_real_escape_string($conn, $idimpianto));
-                $result = $conn->query($query);
+                $result = '';
+                if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                	$result = $conn->query($query);
+                }  
             	if($result->num_rows === 0){
                 	$str = '<span class="filtra">Non è presente nessun impianto con ID: '.$idimpianto.'</span>';
                     echo htmlspecialchars($str);
@@ -70,7 +73,10 @@
                     $nomeposizione= $_POST['nomeposizione'];
                     $descrizione= $_POST['descrizione'];
                 	$query=sprintf("insert into posizione (nomeposizione, descrizione, impianto) values ('%s','%s','%s')", mysqli_real_escape_string($conn, $nomeposizione), mysqli_real_escape_string($conn, $descrizione), mysqli_real_escape_string($conn, $idimpianto));
-                	$result = $conn->query($query);
+                	$result = '';
+                	if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                		$result = $conn->query($query);
+                	}  
                     if($result === false){
                     	$str = '<span class="filtra">Registrazione non riuscita</span>';
                         echo $str;
@@ -107,10 +113,16 @@
             	$id = $_POST['id'];
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));                
-                $result = $conn->query($query);
+                $result = '';
+                if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                	$result = $conn->query($query);
+                }  
                 if($result->num_rows === 1){
                 	$query=sprintf("DELETE FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));
-                    $result = $conn->query($query);
+                    $result = '';
+                	if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                		$result = $conn->query($query);
+                	}  
                     if(!$result === false) {
                         $str = '<span class="filtra">Posizione rimossa con successo</span>';
                         echo htmlspecialchars($str);
@@ -153,7 +165,10 @@
             	$id = $_POST['id2'];
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));                
-                $result = $conn->query($query);
+                $result = '';
+                if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                	$result = $conn->query($query);
+                }  
                 if($result->num_rows === 1){
                 	$str = '<span class="filtra">Recuperati i dati della posizione con ID: '.$id.'</span>';
                     echo htmlspecialchars($str);
@@ -177,7 +192,10 @@
                                 	$id2 = $_POST['id2'];
                                     $conn = new mysqli($servername, $user, $pass, $database);
                                 	$query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id2));                					
-                					$result = $conn->query($query);
+                					$result = '';
+                					if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                						$result = $conn->query($query);
+                					}  
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
                    						echo htmlspecialchars($row[3]);
@@ -206,7 +224,10 @@
                                 	$id2 = $_POST['id2'];
                                     $conn = new mysqli($servername, $user, $pass, $database);
                                 	$query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id2));                					
-                					$result = $conn->query($query);
+                					$result = '';
+                					if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                						$result = $conn->query($query);
+                					}  
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
                    						echo htmlspecialchars($row[1]);
@@ -235,7 +256,10 @@
                                 	$id2 = $_POST['id2'];
                                     $conn = new mysqli($servername, $user, $pass, $database);
                                 	$query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id2));                					
-                					$result = $conn->query($query);
+                					$result = '';
+                					if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                						$result = $conn->query($query);
+                					}  
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
                    						echo htmlspecialchars($row[2]);
@@ -261,7 +285,10 @@
                 $id2=$_POST['id2'];
                 $conn = new mysqli($servername, $user, $pass, $database);
             	$query=sprintf("UPDATE posizione SET nomeposizione='%s', descrizione='%s', impianto='%s' WHERE id='%s'", mysqli_real_escape_string($conn, $nomeposizione), mysqli_real_escape_string($conn, $descrizione), mysqli_real_escape_string($conn, $idimpianto), mysqli_real_escape_string($conn, $id2));                
-                $result = $conn->query($query);
+                $result = '';
+                if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                	$result = $conn->query($query);
+                }  
 				if($result === false) {
                 	$str = '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
                     echo htmlspecialchars($str);
@@ -281,7 +308,10 @@
                 }
                 $query=sprintf("SELECT * FROM posizione WHERE id='%s'", mysqli_real_escape_string($conn, $id));
                 $conn = new mysqli($servername, $user, $pass, $database);
-                $result = $conn->query($query);
+                $result = '';
+                if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                	$result = $conn->query($query);
+                }  
                 if($result->num_rows !== 1){
                 	echo ' disabled ';
                 }

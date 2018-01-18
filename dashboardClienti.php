@@ -55,7 +55,10 @@
                     	require 'config.php';
                     	$conn = new mysqli($servername, $user, $pass, $database);
                         $query = sprintf("select * from posizione inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto= '%s' and email= '%s'",mysqli_real_escape_string($conn, $impianto),  mysqli_real_escape_string($conn, $email));
-                        $result = $conn->query($query);
+                        $result = '';
+                		if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                			$result = $conn->query($query);
+                		}  
                         $str = '<span class="resstat">'.$result->num_rows.'</span>';
                         echo $str;
                     ?>
@@ -67,7 +70,10 @@
                     	require 'config.php';
                     	$conn = new mysqli($servername, $user, $pass, $database);
                         $query = sprintf("select * from sensore inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='%s' and email='%s'",mysqli_real_escape_string($conn, $impianto),  mysqli_real_escape_string($conn, $email));
-                        $result = $conn->query($query);
+                        $result = '';
+                		if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                			$result = $conn->query($query);
+                		}  
                         $str = '<span class="resstat">'.$result->num_rows.'</span>';
                         echo $str;
                     ?>
@@ -79,7 +85,10 @@
                     	require 'config.php';
                     	$conn = new mysqli($servername, $user, $pass, $database);
                         $query = sprintf("select * from rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='%s' and email='%s'",mysqli_real_escape_string($conn, $impianto),  mysqli_real_escape_string($conn, $email));
-                        $result = $conn->query($query);
+                        $result = '';
+                		if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                			$result = $conn->query($query);
+                		}  
                         $str = '<span class="resstat">'.$result->num_rows.'</span>';
                         echo $str;
                     ?>
@@ -104,7 +113,10 @@
                         }
                         
                         $query = sprintf("select rilevazione from rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='%s' and email='%s'",mysqli_real_escape_string($conn, $impianto),  mysqli_real_escape_string($conn, $email));
-                        $result = $conn->query($query);
+                        $result = '';
+                		if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                			$result = $conn->query($query);
+                		}  
                         $count=0;
                         for($i=0; $i<$result->num_rows; $i++){
                         	$row=mysqli_fetch_row($result);

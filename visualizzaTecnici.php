@@ -56,20 +56,14 @@
                 <tbody>
                     <?php
                     	require 'config.php';
+
                         
-                        $id ='';
-                        $nome = '';
-                        $cognome = '';
-                        $email = '';
-                        $citta = '';
-                        
-                        if(isset($_POST['id']) === true || isset($_POST['nome']) === true ||  isset($_POST['cognome']) === true ||  isset($_POST['email']) === true ||  isset($_POST['citta']) === true){
-                        	$id=$_POST['id'];
-                        	$nome=$_POST['nome'];
-                        	$cognome=$_POST['cognome'];
-                        	$email=$_POST['email'];
-                        	$citta=$_POST['città'];
-                        }
+                        $id=$_POST['id'];
+                        $nome=$_POST['nome'];
+                        $cognome=$_POST['cognome'];
+                        $email=$_POST['email'];
+                        $citta=$_POST['città'];
+
                        
                         $query = sprintf("select * from utente inner join credenziale on id=utente where permesso='t'");
                         if(!empty($id)) {
@@ -90,10 +84,10 @@
                          $query=$query.sprintf(" order by utente.id");
                         
                         $conn = new mysqli($servername, $user, $pass, $database);
-                        if(isset($id) === true || isset($nome) === true ||  isset($cognome) === true ||  isset($email) === true ||  isset($citta) === true){
+                        $result = '';
+                        if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
                         	$result = $conn->query($query);
-                        }
-                        
+                        }                  
                         
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);

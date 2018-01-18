@@ -52,7 +52,10 @@ require 'config.php';
     
     for($i=0;$i<$countTipo;$i++){
     	$query=sprintf("select rilevazione from rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario=utente.id inner join credenziale on utente.id=credenziale.utente where nomeimpianto='%s' and email='%s' and sensore.tipo='%s'", mysqli_real_escape_string($conn, $impianto), mysqli_real_escape_string($conn, $email), mysqli_real_escape_string($conn, $tipo[$i]));
-    	$result = $conn->query($query);
+    	$result = '';
+        if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+        	$result = $conn->query($query);
+        }  
         $rilevazioni[$i]=0;
          for($l=0; $l<$result->num_rows; $l++){
             $row=mysqli_fetch_row($result);

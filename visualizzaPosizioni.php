@@ -62,8 +62,11 @@
                            	$query = $query.sprintf(" and posizione.impianto = '".$impianto."'");
                         }
                        $query = $query.sprintf(" order by posizione.id");
-                        $conn = new mysqli($servername, $user, $pass, $database);
-                        $result = $conn->query($query);
+                       $conn = new mysqli($servername, $user, $pass, $database);
+                       $result = '';
+                       if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                        	$result = $conn->query($query);
+                        }  
                         
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);

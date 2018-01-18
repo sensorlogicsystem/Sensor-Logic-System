@@ -13,6 +13,8 @@
 ?>
 <?php
 require 'config.php';
+require 'nocsrf.php';
+$csrf = new nocsrf();
 
 $nome_mittente = 'SensorLogicSystem';
 $mail_mittente = 'sensorlogicsystem@gmail.com';
@@ -25,7 +27,7 @@ $result = false;
 $mail_corpo = '';
 $conn = '';
 
-if(!filter_var($mail_destinatario, FILTER_VALIDATE_EMAIL) === false && !isset($_SESSION['email']) === true) {
+if(!filter_var($mail_destinatario, FILTER_VALIDATE_EMAIL) === false && isset($_SESSION['email']) === true) {
 	$conn = new mysqli($servername, $user, $pass, $database);
 	$query = sprintf("select password from credenziale where email= '%s'", mysqli_real_escape_string($conn, $mail_destinatario));
 	$result = $conn->query($query);
@@ -36,8 +38,10 @@ if(!filter_var($mail_destinatario, FILTER_VALIDATE_EMAIL) === false && !isset($_
 $regexemail = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
 $send = false;
 
-if (preg_match($regexemail, $mail_destinatario) === 1 && $result->num_rows === 1) {
-    $send = mail($mail_destinatario, $mail_oggetto, $mail_corpo, $mail_headers);
+if (preg_match($regexemail, $mail_destinatario) === 1 && $result->num_rows === 1) {	
+	if($csrf->check('csrf_token', $_POST, false, 60*19, true)){
+    	$send = mail($mail_destinatario, $mail_oggetto, $mail_corpo, $mail_headers);
+    }
 }	
 
 if($send === true) {

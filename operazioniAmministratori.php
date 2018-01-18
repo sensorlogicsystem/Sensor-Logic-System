@@ -27,7 +27,7 @@
     	<span class="visClient">Registrare un nuovo amministratore</span><br /><br /><br />
         <?php
         $layout = new Layout();
-        echo $layout->layoutop($nome, $cognome, $cf, $sesso, $telefono, $email, $datadinascita, $cap, $citta, $indirizzo, $numcivico, $provincia);
+        echo $layout->layoutop($_POST['nome'], $_POST['cognome'], $_POST['cf'], $_POST['sesso'], $_POST['telefono'], $_POST['email'], $_POST['datadinascita'], $_POST['cap'], $_POST['citta'], $_POST['indirizzo'], $_POST['numcivico'], $_POST['provincia']);
         ?>
         
         <?php
@@ -45,6 +45,7 @@
                 $numcivico= $_POST['numcivico'];
                 $provincia= $_POST['provincia'];
                 $cap= $_POST['cap'];
+                $email = $_POST['email'];
                 $today= getdate();
                 $dataregistrazione= $today['year']."-".$today['mon']."-".$today['mday'];
                 
@@ -347,7 +348,7 @@
                            	 		}
                                 }
                        		?>" pattern= "[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com" required/></td>
-                  </tr>
+                  </tr>                 
                   <tr>
                       <td><span class="filtra2">Data di nascita</span></td>
                       <td> <input class="inputfiltro2" type="date" placeholder="Data di nascita" id="datadinascita2" name="datadinascita2"

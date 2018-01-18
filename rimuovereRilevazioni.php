@@ -44,10 +44,16 @@
             	$conn = new mysqli($servername, $user, $pass, $database);
             	$id = $_POST['id'];
                 $query=sprintf("SELECT * FROM rilevazione WHERE id='%s'",mysqli_real_escape_string($conn, $id));
-                $result = $conn->query($query);
+                $result = '';
+                if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                	$result = $conn->query($query);
+                }  
                 if($result->num_rows === 1){
                 	$query=sprintf("delete rilevazione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where rilevazione.id='%s' and impianto.nomeimpianto ='%s' and credenziale.email='%s'",mysqli_real_escape_string($conn, $id),mysqli_real_escape_string($conn, $impianto),mysqli_real_escape_string($conn, $email));
-                    $result = $conn->query($query);
+                    $result = '';
+                	if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                		$result = $conn->query($query);
+                	}  
       
                     if(!$result === false) {
                         $str = '<span class="filtra">Rivelazione rimossa con successo</span>';

@@ -50,7 +50,7 @@ class Layout{
         $var=$var.'<tbody>';
         $var=$var.'<tr>';
         $var=$var.'<td><span class="filtra2">Telefono</span></td>';
-        $var=$var.'<td> <input class="inputfiltro2" type="text" placeholder="Telefono" id="telefono" name="telefono" maxlength="10" value="'.$telefono.'>" pattern= "[0-9]{0,10}" title="Deve essere composto da soli 10 numeri" required/></td>';
+        $var=$var.'<td> <input class="inputfiltro2" type="text" placeholder="Telefono" id="telefono" name="telefono" maxlength="10" value="'.$telefono.'" pattern= "[0-9]{0,10}" title="Deve essere composto da soli 10 numeri" required/></td>';
         $var=$var.'</tr>';
         $var=$var.'<tr>';
         $var=$var.'<td><span class="filtra2">Email</span></td>';

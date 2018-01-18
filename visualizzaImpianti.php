@@ -79,7 +79,10 @@
                         $query=$query.sprintf("order by impianto.id");
                         
                         $conn = new mysqli($servername, $user, $pass, $database);
-                        $result = $conn->query($query);
+                        $result = '';
+                        if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
+                        	$result = $conn->query($query);
+                        }  
                        
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);

@@ -27,7 +27,7 @@ include_once 'Layout.php';
     	<span class="visClient">Registrare un nuovo tecnico</span><br /><br /><br />
         <?php
         $layout = new Layout();
-        echo $layout->layoutop($nome, $cognome, $cf, $sesso, $telefono, $email, $datadinascita, $cap, $citta, $indirizzo, $numcivico, $provincia);
+       	echo $layout->layoutop($_POST['nome'], $_POST['cognome'], $_POST['cf'], $_POST['sesso'], $_POST['telefono'], $_POST['email'], $_POST['datadinascita'], $_POST['cap'], $_POST['citta'], $_POST['indirizzo'], $_POST['numcivico'], $_POST['provincia']);
         ?>
         
         <?php
@@ -45,6 +45,7 @@ include_once 'Layout.php';
                 $numcivico= $_POST['numcivico'];
                 $provincia= $_POST['provincia'];
                 $cap= $_POST['cap'];
+                $email = $_POST['email'];
                 $today= getdate();
                 $dataregistrazione= $today['year']."-".$today['mon']."-".$today['mday'];
                 
