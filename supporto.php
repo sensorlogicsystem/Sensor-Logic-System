@@ -1,6 +1,8 @@
 <?php
 	require 'config.php';
-    
+    require 'nocsrf.php';
+	$csrf = new nocsrf();
+
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
@@ -69,7 +71,9 @@
                 $send = false;
 
                 if (preg_match($regexemail, $mail_destinatario) === 1) {
-                    $send = mail($mail_destinatario, $mail_oggetto, $mail_corpo, $mail_headers);
+                	if($csrf->check('csrf_token', $_POST, false, 60*19, true)){
+                    	$send = mail($mail_destinatario, $mail_oggetto, $mail_corpo, $mail_headers);
+                    }
                 }	
 
                 if($send === true) {

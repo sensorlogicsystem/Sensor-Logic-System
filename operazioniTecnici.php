@@ -1,6 +1,8 @@
 <?php
-include_once 'Layout.php';
+	include_once 'Layout.php';
 	require 'config.php';
+    require 'nocsrf.php';
+	$csrf = new nocsrf();
     
 	session_start();
     $email = $_SESSION['email'];
@@ -27,7 +29,7 @@ include_once 'Layout.php';
     	<span class="visClient">Registrare un nuovo tecnico</span><br /><br /><br />
         <?php
         $layout = new Layout();
-       	echo $layout->layoutop($_POST['nome'], $_POST['cognome'], $_POST['cf'], $_POST['sesso'], $_POST['telefono'], $_POST['email'], $_POST['datadinascita'], $_POST['cap'], $_POST['citta'], $_POST['indirizzo'], $_POST['numcivico'], $_POST['provincia']);
+        echo $layout->layoutop(htmlspecialchars($_POST['nome']), htmlspecialchars($_POST['cognome']), htmlspecialchars($_POST['cf']), htmlspecialchars($_POST['sesso']), htmlspecialchars($_POST['telefono']), htmlspecialchars($_POST['email']), htmlspecialchars($_POST['datadinascita']), htmlspecialchars($_POST['cap']), htmlspecialchars($_POST['citta']), htmlspecialchars($_POST['indirizzo']), htmlspecialchars($_POST['numcivico']), htmlspecialchars($_POST['provincia']));
         ?>
         
         <?php
@@ -80,7 +82,9 @@ include_once 'Layout.php';
                         $regexemail = '/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,3})$/';
 						$send = false;
                         if (preg_match($regexemail, $email) === 1) {
-                        	$send = mail($email, $mail_oggetto, $mail_corpo, $mail_headers);
+                        	if($csrf->check('csrf_token', $_POST, false, 60*19, true)){
+                        		$send = mail($email, $mail_oggetto, $mail_corpo, $mail_headers);
+                            }
                         }
                         if($send === true){
                         	$str = '<br /><span class="filtra">E-mail inviata al cliente</span>';
