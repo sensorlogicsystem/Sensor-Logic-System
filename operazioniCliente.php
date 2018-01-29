@@ -1,18 +1,9 @@
 <?php
-include_once 'Layout.php';
+
 	require 'config.php';
-    require 'nocsrf.php';
-	$csrf = new nocsrf();
-    
-	session_start();
-    $email = $_SESSION['email'];
-    $password = $_SESSION['password'];
-    $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
-    $conn = new mysqli($servername, $user, $pass, $database);
-    $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
-    	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
-    }
+    include_once 'Autenticazione.php';
+    $autentica= new Autenticazione();
+    $autentica -> autenticazione(); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,6 +19,9 @@ include_once 'Layout.php';
     	<br />
     	<span class="visClient">Registrare un nuovo cliente</span><br /><br /><br />
         <?php
+        include_once 'Layout.php';
+    	require 'constants.php';
+        include_once 'QueryRegistrazioneUtente.php';
         $layout = new Layout();
         echo $layout->layoutop(htmlspecialchars($_POST['nome']), htmlspecialchars($_POST['cognome']), htmlspecialchars($_POST['cf']), htmlspecialchars($_POST['sesso']), htmlspecialchars($_POST['telefono']), htmlspecialchars($_POST['email']), htmlspecialchars($_POST['datadinascita']));
         echo $layout->layoubot(htmlspecialchars($_POST['cap']), htmlspecialchars($_POST['citta']), htmlspecialchars($_POST['indirizzo']), htmlspecialchars($_POST['numcivico']), htmlspecialchars($_POST['provincia']));
@@ -35,76 +29,13 @@ include_once 'Layout.php';
         
         <?php
         	require 'config.php';
-        	
+        	include_once 'QueryRegistrazioneUtente.php';
             if(isset($_POST['aggiungere'])===true){
-            	$cf = $_POST['cf'];
-                $cognome= $_POST['cognome'];
-                $nome= $_POST['nome'];
-                $sesso= $_POST['sesso'];
-                $telefono= $_POST['telefono'];
-                $datadinascita= $_POST['datadinascita'];
-                $citta=$_POST['citta'];
-                $indirizzo=$_POST['indirizzo'];
-                $numcivico= $_POST['numcivico'];
-                $provincia= $_POST['provincia'];
-                $cap= $_POST['cap'];
-                $email =$_POST['email'];
+            	
                 $today= getdate();
-                $dataregistrazione= $today['year']."-".$today['mon']."-".$today['mday'];
-            
-            	$query = sprintf("insert into utente (cf, cognome, nome, sesso, telefono, datadinascita, citta, indirizzo, numcivico, provincia, cap, dataregistrazione) values ('".$cf."','".$cognome."','".$nome."','".$sesso."','".$telefono."','".$datadinascita."','".$citta."','".$indirizzo."','".$numcivico."','".$provincia."',".$cap.",'".$dataregistrazione."')");
-                $conn = new mysqli($servername, $user, $pass, $database);
-                $result = $conn->query($query);
-                if($result !== false) {
-                	$query = sprintf("select id from utente where cf ='".$cf."'");
-                	$result = $conn->query($query);
-                    $row = mysqli_fetch_row($result);
-                    $id= $row[0];
-                    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-   					$pass = array();
-    				$alphaLength = strlen($alphabet) - 1;
-    				for ($i = 0; $i < 8; $i++) {
-       	 				$n = rand(0, $alphaLength);
-       					$pass[] = $alphabet[$n];
-   					}
-   					$psw = implode($pass);
-                    $query = sprintf("insert into credenziale (email, password, permesso, utente) values ('".$email."','".$psw."','u',".$id.")");
-                    $result = $conn->query($query);
-                    if($result !== false) {
-                    	$str = '<span class="filtra">Registrazione riuscita</span>';
-                        echo $str;
-                        $nome_mittente = 'SensorLogicSystem';
-                        $mail_mittente = 'sensorlogicsystem@gmail.com';
-                        $mail_oggetto = 'Benvenuto/a nella nostra azienda';
-                        $mail_headers = 'From: ' .  $nome_mittente . ' <' .  $mail_mittente . '>\r\n';
-                        $mail_headers .= 'Reply-To: ' .  $mail_mittente . '\r\n';
-                        $mail_corpo = 'Gentile cliente, la ringraziamo per averci scelto. Ecco di seguito le sue credenziali per poter accedere ai suoi servizi. Password: '.$psw;
-
-                        $regexemail = '/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,3})$/';
-						$send = false;
-                        if (preg_match($regexemail, $email) === 1) {
-                        	if($csrf->check('csrf_token', $_POST, false, 60*19, true)){
-                        		$send = mail($email, $mail_oggetto, $mail_corpo, $mail_headers);
-                            }
-                        }
-                        if($send === true){
-                        	$str = '<br /><span class="filtra">E-mail inviata al cliente</span>';
-                            echo $str;
-                        } else {
-                        	$str = '<br /><span class="filtra">'."Invio dell'e-mail non riuscito".'</span>';
-                            echo $str;
-                        }
-                    } else {
-                    	$query = sprintf("delete from utente where cf='".$_POST['cf']."'");
-                        $conn->query($query);
-                    	$str = '<span class="filtra">Registrazione non riuscita</span>';
-                        echo $str;
-                    }
-                } else {
-                	$str = '<span class="filtra">Registrazione non riuscita</span>';
-                    echo $str;
-                }
-            }
+            	$aggiungicli= new QueryRegistrazioneUtente();
+                $aggiungicli->addutente($_POST['cf'],$_POST['cognome'],$_POST['nome'],$_POST['sesso'],$_POST['telefono'],$_POST['datadinascita'],$_POST['citta'],$_POST['indirizzo'],$_POST['numcivico'],$_POST['provincia'],$_POST['cap'],$today['year'].'-'.$today['mon'].'-'.$today['mday'], $_POST['email'], 'u');
+               }
         ?>
    
        	<br /><br /><br />
@@ -131,13 +62,13 @@ include_once 'Layout.php';
         	
         	if(isset($_POST['rimuovere'])===true){
             	$id = $_POST['id'];
-                $query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$id." and permesso='u'");
+                $query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$id." and permesso='u'");
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	$query=sprintf("DELETE FROM utente WHERE id=".$id."");
+                	$query=sprintf('DELETE FROM utente WHERE id='.$id);
                     $result = $conn->query($query);
-                    if(!$result === false) {
+                    if(!($result === false) === true) {
                         $str = '<span class="filtra">Cliente rimosso con successo</span>';
                         echo $str;
                     } else {
@@ -177,7 +108,7 @@ include_once 'Layout.php';
             
             if(isset($_POST['recuperare'])===true){
             	$id = $_POST['id2'];
-                $query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$id." and permesso='u'");
+                $query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$id." and permesso='u'");
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
@@ -200,19 +131,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[3];
+                   						echo $row[TRE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$nome=$_POST['nome2'];
                             		if(isset($nome)===true){
                             			echo $nome;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required/></td>
                 </tr>
                 <tr>
@@ -222,19 +153,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[2];
+                   						echo $row[DUE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$cognome=$_POST['cognome2'];
                             		if(isset($cognome)===true){
                             			echo $cognome;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required/></td>
                 </tr>
                 <tr>
@@ -244,19 +175,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[1];
+                   						echo $row[UNO];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$cf=$_POST['cf2'];
                             		if(isset($cf)===true){
                             			echo $cf;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" title="Deve essere composto da 16 valori, seguendo il formato del cofice fiscale" required/></td>
                 </tr>
                 <tr>
@@ -268,38 +199,38 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                                        if($row[4]==="m"){echo 'selected="selected"';}
+                                        if($row[QUATTRO]==='m'){echo 'selected="selected"';}
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
-                            			if($sesso==="m"){echo 'selected="selected"';}
+                            			if($sesso==='m'){echo 'selected="selected"';}
                            	 		}
-                                }
+                                }}
                        		?>>M</option>
   							<option value="f"
                             <?php
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                                        if($row[4]==="f"){echo 'selected="selected"';}
+                                        if($row[QUATTRO]==='f'){echo 'selected="selected"';}
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
-                            			if($sesso==="f"){echo 'selected="selected"';}
+                            			if($sesso==='f'){echo 'selected="selected"';}
                            	 		}
-                                }
+                                }}
                        		?>>F</option>
                     	</select> 
                 	</td>
@@ -317,19 +248,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[5];
+                   						echo $row[CINQUE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$telefono=$_POST['telefono2'];
                             		if(isset($telefono)===true){
                             			echo $telefono;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[0-9]{0,10}" title="Deve essere composto da soli 10 numeri" required/></td>
                   </tr>
                   <tr>
@@ -339,19 +270,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[13];
+                   						echo $row[TREDICI];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$email=$_POST['email2'];
                             		if(isset($email)===true){
                             			echo $email;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com" required/></td>
                   </tr>
                   <tr>
@@ -361,19 +292,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[6];
+                   						echo $row[SEI];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$data=$_POST['datadinascita2'];
                             		if(isset($data)===true){
                             			echo $data;
                            	 		}
-                                }
+                                }}
                        		?>" title="Deve contenere una data valida" required/></td>
                   </tr>
                   <tr>
@@ -383,19 +314,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[11];
+                   						echo $row[UNDICI];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$cap=$_POST['cap2'];
                             		if(isset($cap)===true){
                             			echo $cap;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[0-9]{0,5}" title="Deve essere composto da soli 5 numeri" required/></td>
                   </tr>
               </tbody>
@@ -412,19 +343,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[7];
+                   						echo $row[SETTE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$citta=$_POST['citta2'];
                             		if(isset($citta)===true){
                             			echo $citta;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere"  required/></td>
                     </tr>
                     <tr>
@@ -434,19 +365,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[8];
+                   						echo $row[OTTO];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$indirizzo=$_POST['indirizzo2'];
                             		if(isset($indirizzo)===true){
                             			echo $indirizzo;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                     </tr>
                     <tr>
@@ -456,19 +387,19 @@ include_once 'Layout.php';
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
+                                	$query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[9];
+                   						echo $row[NOVE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$numcivico=$_POST['numcivico2'];
                             		if(isset($numcivico)===true){
                             			echo $numcivico;
                            	 		}
-                                }
+                                }}
                        		?>" pattern="[a-zA-Z0-9]+{0,50}"title="Deve essere composta da lettere e/o numeri" required/></td>
                     </tr>
                     <tr>
@@ -476,21 +407,11 @@ include_once 'Layout.php';
                         <td><input class="inputfiltro2" type="text" placeholder="Provincia" id="provincia2" name="provincia2" maxlength="2"
                          value="<?php
                             	require 'config.php';
-                                
-                            	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$_POST['id2']." and permesso='u'");
-                					$conn = new mysqli($servername, $user, $pass, $database);
-                					$result = $conn->query($query);
-                                    if($result->num_rows === 1) {
-                                    	$row = mysqli_fetch_row($result);
-                   						echo $row[10];
-                                    }
-                                } elseif(isset($_POST['salvare'])===true) {
-                                	$provincia=$_POST['provincia2'];
-                            		if(isset($provincia)===true){
-                            			echo $provincia;
-                           	 		}
-                                }
+                                include_once 'Recuperare.php';
+                                $query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$_POST['id2']." and permesso='u'");
+								$recuperare= new Recuperare();
+                                $recuperare-> recovery($query,$_POST['salvare'], $_POST['provincia2'], $_POST['recuperare'] );
+                            	
                        		?>" pattern= "[A-Za-z]{0,2}" title="Deve contenere 2 lettere" required/></td>
                     </tr>
                 </tbody>
@@ -498,44 +419,26 @@ include_once 'Layout.php';
         </div>
         <?php
         	require 'config.php';
-        	
+        	include_once 'QueryModificaUtente.php';
         	if(isset($_POST['salvare'])===true){
-            	$cf = $_POST['cf2'];
-                $cognome= $_POST['cognome2'];
-                $nome= $_POST['nome2'];
-                $sesso= $_POST['sesso2'];
-                $telefono= $_POST['telefono2'];
-                $datadinascita= $_POST['datadinascita2'];
-                $citta=$_POST['citta2'];
-                $indirizzo=$_POST['indirizzo2'];
-                $numcivico= $_POST['numcivico2'];
-                $provincia= $_POST['provincia2'];
-                $cap= $_POST['cap2'];
-                $email= $_POST['email2'];
-            	$query=sprintf("UPDATE utente SET cf='".$cf."', cognome='".$cognome."', nome='".$nome."', sesso='".$sesso."', telefono='".$telefono."', datadinascita='".$datadinascita."', citta='".$citta."', indirizzo='".$indirizzo."', numcivico='".$numcivico."', provincia='".$provincia."', cap='".$cap."' WHERE id=".$_POST['id2']);
-                $conn = new mysqli($servername, $user, $pass, $database);
-                $result = $conn->query($query);
-                $query=sprintf("UPDATE credenziale SET email='".$email."' WHERE utente=".$_POST['id2']);
-                $result2 = $conn->query($query);
-				if($result === false || $result2 === false) {
-                	$str =  '<span class="filtra">Impossibile salvare, controllare le modifiche effettuate</span>';
-                    echo $str;
-                } else {
-                	$str = '<span class="filtra">Modifiche salvate con successo</span>';
-                    echo $str;
-                }
-        	}
+             	$save= new QueryModificaUtente();
+                $save-> savedata($_POST['cf2'],$_POST['cognome2'],$_POST['nome2'], $_POST['sesso2'],$_POST['telefono2'],$_POST['datadinascita2'],$_POST['citta2'],$_POST['indirizzo2'], $_POST['numcivico2'],$_POST['provincia2'], $_POST['cap2'],$_POST['email2']);
+
+            	}
         ?>
        	<br /><br />
     	<button class="buttfiltro" name="salvare" value="salvare" type="submit" id="salvare" 
         	<?php 
            		require 'config.php';
+                $conn = '';
         		$id=$_POST['id2']; 
                 if(isset($id)===false){
                 	echo ' disabled ';
                 }
-                $query=sprintf("SELECT * FROM utente inner join credenziale on id=utente WHERE id=".$id." and permesso='u'");
-                $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf('SELECT * FROM utente inner join credenziale on id=utente WHERE id='.$id." and permesso='u'");
+                if($conn === '') {
+                    $conn = new mysqli($servername, $user, $pass, $database);
+                }
                 $result = $conn->query($query);
                 if($result->num_rows !== 1){
                 	echo ' disabled ';

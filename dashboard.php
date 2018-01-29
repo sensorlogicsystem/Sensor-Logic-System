@@ -119,13 +119,21 @@ if($result === false || $result->num_rows !== 1){
 <canvas id="ChartClienti" class="chartClienti"></canvas>
 
 <script type="text/javascript">
-
+	var etichette = new String("");
+    if(etichette == '') {
+    	etichette = <?php require 'chartClienti.php'; $stampa=''; if($stampa === ''){$stampa = json_encode($date);} echo $stampa;?>;
+    }
+    var dati = new String ("");
+    if(dati == '') {
+    	dati = <?php require 'chartClienti.php'; $stampa=''; if($stampa === ''){$stampa = json_encode($clienti);} echo $stampa; ?>;
+    }
+    
     var myChart = new Chart(document.getElementById("ChartClienti"), {
         type: 'line',
         data: {
-            labels: <?php require 'chartClienti.php'; echo json_encode($date) ?>,
+            labels: etichette,
             datasets: [{
-                data: <?php require 'chartClienti.php'; echo json_encode($clienti) ?>,
+                data: dati,
                 label: "Clienti",
                 borderColor: "#3e95cd",
                 fill: false

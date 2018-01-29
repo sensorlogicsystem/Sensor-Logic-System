@@ -1,12 +1,14 @@
 <?php
+
+    define('CSRF', 'csrf_token');
+    define('SIZE', 1140);
+
 class nocsrf{
     function check($token, $post, $bool, $size, $bool2){
-    	$token = 'crsf_token';
-        $post = 'crsf';
-        $bool = true;
-        $size = 95;
-        $bool2 = true;
-        return true;
+    	$result = false;
+    	if($token === CSRF || $post === $_POST || $bool === false || $size === SIZE || $bool2 === true) {
+    		$result = true;
+    	}
+        return $result;
     }
-}
-?>
+}

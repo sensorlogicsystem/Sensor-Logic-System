@@ -1,5 +1,6 @@
 <?php
 	require 'config.php';
+    require 'constants.php';
 
 session_start();
     $email = $_SESSION['email'];
@@ -54,7 +55,7 @@ if($conn === '') {
                     <td><input class="inputfiltro2" type="text" placeholder="Nome" id="nome2" name="nome2" maxlength="50" 
                          value="<?php
                             	require 'config.php';
-                            	$TRE = 3;
+                            	
                                 if(isset($_POST['salvare'])===true){
                                 	$nome=$_POST['nome2'];
                                    
@@ -62,7 +63,7 @@ if($conn === '') {
                             			echo $nome;
                                 	}
                                 }else{
-                                	echo $row[$TRE];
+                                	echo $row[TRE];
                                 }
                             	
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required readonly="readonly"/></td>
@@ -72,14 +73,14 @@ if($conn === '') {
                     <td><input class="inputfiltro2" type="text" placeholder="Cognome" id="cognome2" name="cognome2" maxlength="50"
                          value="<?php
                                 require 'config.php';
-                                $DUE = 2;
+                                
                                 if(isset($_POST['salvare'])===true){
                                 	$cognome=$_POST['cognome2'];
                             		if(isset($cognome)===true){
                             			echo $cognome;
                                 	}
                                 }else{
-                                	echo $row[$DUE];
+                                	echo $row[DUE];
                                 }
                             	
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required readonly="readonly"/></td>
@@ -96,7 +97,7 @@ if($conn === '') {
                             			echo $cf;
                                 	}
                                 }else{
-                                	echo $row[1];
+                                	echo $row[UNO];
                                 }
                        		?>" pattern= "^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" title="Deve essere composto da 16 valori, seguendo il formato del cofice fiscale" required readonly="readonly"/></td>
                 </tr>
@@ -107,27 +108,27 @@ if($conn === '') {
   							<option value="m"
                             <?php
                             	require 'config.php';
-                                $QUATTRO = 4;
+                                
                                 if(isset($_POST['salvare'])===true){
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
                             			if($sesso==='m'){echo 'selected="selected"';}
                                 	}
                                 }else{
-                                	if($row[$QUATTRO]==='m'){echo 'selected="selected"';}
+                                	if($row[QUATTRO]==='m'){echo 'selected="selected"';}
                                 }
                        		?>>M</option>
   							<option value="f"
                             <?php
                             	require 'config.php';
-                                $QUATTRO = 4;
+                                
                                 if(isset($_POST['salvare'])===true){
                                 	$sesso=$_POST['sesso2'];
                             		if(isset($sesso)===true){
                             			if($sesso==='f'){echo 'selected="selected"';}
                                 	}
                                 }else{
-                                	if($row[$QUATTRO]==='f'){echo 'selected="selected"';}
+                                	if($row[QUATTRO]==='f'){echo 'selected="selected"';}
                                 }
                        		?>>F</option>
                     	</select> 
@@ -144,7 +145,7 @@ if($conn === '') {
                       <td> <input class="inputfiltro2" type="text" placeholder="Telefono" id="telefono2" name="telefono2" maxlength="10"
                          value="<?php
                             	require 'config.php';
-                            	$CINQUE = 5;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$telefono=$_POST['telefono2'];
@@ -152,7 +153,7 @@ if($conn === '') {
                             			echo $telefono;
                                 	}
                                 }else{
-                                	echo $row[$CINQUE];
+                                	echo $row[CINQUE];
                                 }
                                 ?>" pattern= "[0-9]{0,10}" title="Deve essere composto da soli 10 numeri" required/></td>
                   </tr>
@@ -161,7 +162,7 @@ if($conn === '') {
                       <td><input class="inputfiltro2" type="text" placeholder="Email" id="email2" name="email2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                            	$TREDICI = 13;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$email=$_POST['email2'];
@@ -169,7 +170,7 @@ if($conn === '') {
                             			echo $email;
                                 	}
                                 }else{
-                                	echo $row[$TREDICI];
+                                	echo $row[TREDICI];
                                 }
                             	?>" pattern= "[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com" required/></td>
                   </tr>
@@ -178,7 +179,7 @@ if($conn === '') {
                       <td> <input class="inputfiltro2" type="date" placeholder="Data di nascita" id="datadinascita2" name="datadinascita2"
                          value="<?php
                             	require 'config.php';
-                            	$SEI = 6;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$datadinascita=$_POST['datadinascita2'];
@@ -186,7 +187,7 @@ if($conn === '') {
                             			echo $datadinascita;
                                 	}
                                 }else{
-                                	echo $row[$SEI];
+                                	echo $row[SEI];
                                 }
                        		?>" title="Deve contenere una data valida" required readonly="readonly"/></td>
                   </tr>
@@ -195,7 +196,7 @@ if($conn === '') {
                       <td>  <input class="inputfiltro2" type="text" placeholder="CAP" id="cap2" name="cap2" maxlength="5"
                          value="<?php
                             	require 'config.php';
-                            	$UNDICI = 11;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$cap=$_POST['cap2'];
@@ -203,7 +204,7 @@ if($conn === '') {
                             			echo $cap;
                                 	}
                                 }else{
-                                	echo $row[$UNDICI];
+                                	echo $row[UNDICI];
                                 }
                             	?>" pattern= "[0-9]{0,5}" title="Deve essere composto da soli 5 numeri" required/></td>
                   </tr>
@@ -219,7 +220,7 @@ if($conn === '') {
                         <td> <input class="inputfiltro2" type="text" placeholder="citta" id="citta2" name="citta2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                            	$SETTE = 7;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$citta=$_POST['citta2'];
@@ -227,7 +228,7 @@ if($conn === '') {
                             			echo $citta;
                                 	}
                                 }else{
-                                	echo $row[$SETTE];
+                                	echo $row[SETTE];
                                 }
                             	?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere"  required/></td>
                     </tr>
@@ -236,7 +237,7 @@ if($conn === '') {
                         <td><input class="inputfiltro2" type="text" placeholder="indirizzo" id="indirizzo2" name="indirizzo2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                            	$OTTO = 8;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$indirizzo=$_POST['indirizzo2'];
@@ -244,7 +245,7 @@ if($conn === '') {
                             			echo $indirizzo;
                                 	}
                                 }else{
-                                	echo $row[$OTTO];
+                                	echo $row[OTTO];
                                 }
                             	?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                     </tr>
@@ -253,7 +254,7 @@ if($conn === '') {
                         <td><input class="inputfiltro2" type="text" placeholder="numcivico" id="numcivico2" name="numcivico2" maxlength="50"
                          value="<?php
                             	require 'config.php';
-                            	$NOVE = 9;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$numcivico=$_POST['numcivico2'];
@@ -261,7 +262,7 @@ if($conn === '') {
                             			echo $numcivico;
                                 	}
                                 }else{
-                                	echo $row[$NOVE];
+                                	echo $row[NOVE];
                                 }
                             	?>" pattern="[a-zA-Z0-9]+{0,50}"title="Deve essere composta da lettere e/o numeri" required/></td>
                     </tr>
@@ -270,7 +271,7 @@ if($conn === '') {
                         <td><input class="inputfiltro2" type="text" placeholder="Provincia" id="provincia2" name="provincia2" maxlength="2"
                          value="<?php
                             	require 'config.php';
-                            	$DIECI = 10;
+                            	
 
                                 if(isset($_POST['salvare'])===true){
                                 	$provincia=$_POST['provincia2'];
@@ -278,7 +279,7 @@ if($conn === '') {
                             			echo $provincia;
                                 	}
                                 }else{
-                                	echo $row[$DIECI];
+                                	echo $row[DIECI];
                                 }
                             	?>" pattern= "[A-Za-z]{0,2}" title="Deve contenere 2 lettere" required/></td>
                     </tr>

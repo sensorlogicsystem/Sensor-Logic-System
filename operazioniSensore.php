@@ -1,13 +1,16 @@
 <?php
 	require 'config.php';
-    
+    require 'constants.php';
+    $conn = '';
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if(empty($conn) === true){
+    	$conn = new mysqli($servername, $user, $pass, $database);
+    }
     $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),  mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
@@ -78,7 +81,7 @@
                 		$result = $conn->query($query);
                 	}  
                     $count=$result->num_rows+1;
-                    $id=substr($tipo, 0,3).substr($marca,0,3).$count;
+                    $id=substr($tipo, ZERO,TRE).substr($marca,ZERO,TRE).$count;
                 	$query=sprintf("insert into sensore (id, tipo, marca, posizione) values ('%s','%s','%s','%s')",mysqli_real_escape_string($conn, $id),  mysqli_real_escape_string($conn, $tipo),mysqli_real_escape_string($conn, $marca),  mysqli_real_escape_string($conn, $idposizione));
                 	$result = '';
                 	if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
@@ -130,7 +133,7 @@
                 	if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
                 		$result = $conn->query($query);
                 	}  
-                    if(!$result === false) {
+                    if(!($result === false) === true) {
                         $str = '<span class="filtra">Sensore rimosso con successo</span>';
                         echo htmlspecialchars($str);
                     } else {
@@ -205,14 +208,14 @@
                 					}  
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo htmlspecialchars($row[3]);
+                   						echo htmlspecialchars($row[TRE]);
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$idposizione=$_POST['idposizione2'];
                             		if(isset($idposizione)===true){
                             			echo htmlspecialchars($idposizione);
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
                 </tr>
             </tbody>
@@ -239,12 +242,12 @@
                                     	$row = mysqli_fetch_row($result);
                    						echo htmlspecialchars($row[1]);
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$tipo=$_POST['tipo2'];
                             		if(isset($tipo)===true){
                             			echo htmlspecialchars($tipo);
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                 </tr>
               </tbody>
@@ -269,14 +272,14 @@
                                     }  
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo htmlspecialchars($row[2]);
+                   						echo htmlspecialchars($row[DUE]);
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$marca=$_POST['marca2'];
                             		if(isset($marca)===true){
                             			echo htmlspecialchars($marca);
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                   	</tr>
                 </tbody>
@@ -296,7 +299,7 @@
                 	$result = $conn->query($query);
                 }  
                 $count=$result->num_rows+1;
-                $id=substr($tipo, 0,3).substr($marca,0,3).$count;
+                $id=substr($tipo, ZERO,TRE).substr($marca,ZERO,TRE).$count;
                 $id2 = $_POST['id2'];
                 $conn = new mysqli($servername, $user, $pass, $database);
             	$query=sprintf("UPDATE sensore SET id='%s, tipo='%s', marca='%s', posizione='%s' WHERE id='%s'",mysqli_real_escape_string($conn, $id),mysqli_real_escape_string($conn, $tipo),mysqli_real_escape_string($conn, $marca),mysqli_real_escape_string($conn, $idposizione),mysqli_real_escape_string($conn, $id2));       
@@ -317,12 +320,18 @@
     	<button class="buttfiltro" name="salvare" value="salvare" type="submit" id="salvare" 
         	<?php 
            		require 'config.php';
+                $conn = '';
+                $query = '';
         		$id=$_POST['id2']; 
                 if(isset($id)===false){
                 	echo ' disabled ';
                 }
-                $query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id));
-                $conn = new mysqli($servername, $user, $pass, $database);
+                if(empty($query) === true) {
+                	$query=sprintf("SELECT * FROM sensore WHERE id='%s'",mysqli_real_escape_string($conn, $id));
+                }
+                if(empty($conn) === true){
+    				$conn = new mysqli($servername, $user, $pass, $database);
+    			}
                 $result = '';
                 if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
                 	$result = $conn->query($query);

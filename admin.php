@@ -23,7 +23,7 @@ if($result === false || $result->num_rows !== 1){
     <meta charset="utf-8">
     <title>SensorLogicSystem</title>
     <meta name="viewport" content="width=320">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="adminDesktop.css" media="only screen and (min-width: 401px)" rel="stylesheet" type="text/css">
     <link href="adminMobile.css" media="only screen and (max-width: 400px)" rel="stylesheet" type="text/css">
 </head>

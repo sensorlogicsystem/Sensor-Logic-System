@@ -1,13 +1,16 @@
 <?php
 	require 'config.php';
-    
+    require 'constants.php';
+    $conn = '';
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
     $query = sprintf("SELECT * FROM credenziale where email='".$email."' and password='".$password."'");
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if($conn === '') {
+    	$conn = new mysqli($servername, $user, $pass, $database);
+	}
     $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
@@ -101,7 +104,7 @@
                     $provincia= $_POST['provincia'];
                     $cap= $_POST['cap'];
                     $descrizione= $_POST['descrizione'];
-                	$query=sprintf("insert into impianto (proprietario, nomeimpianto, citta, indirizzo, numcivico, provincia, cap, descrizione, tipo) values (".$idproprietario.",'".$nomeimpianto."','".$citta."','".$indirizzo."','".$numcivico."','".$provincia."','".$cap."','".$descrizione."','".$tipo."')");
+                	$query=sprintf('insert into impianto (proprietario, nomeimpianto, citta, indirizzo, numcivico, provincia, cap, descrizione, tipo) values ('.$idproprietario.",'".$nomeimpianto."','".$citta."','".$indirizzo."','".$numcivico."','".$provincia."','".$cap."','".$descrizione."','".$tipo."')");
                 	$result = $conn->query($query);
                     if($result === false){
                     	$str = '<span class="filtra">Registrazione non riuscita</span>';
@@ -137,13 +140,13 @@
         	
         	if(isset($_POST['rimuovere'])===true){
             	$id = $_POST['id'];
-                $query=sprintf("SELECT * FROM impianto WHERE id=".$id);
+                $query=sprintf('SELECT * FROM impianto WHERE id='.$id);
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
-                	$query=sprintf("DELETE FROM impianto WHERE id=".$id."");
+                	$query=sprintf('DELETE FROM impianto WHERE id='.$id);
                     $result = $conn->query($query);
-                    if(!$result === false) {
+                    if(!($result === false) === true) {
                         $str = '<span class="filtra">Impianto rimosso con successo</span>';
                         echo $str;
                     } else {
@@ -183,7 +186,7 @@
             
             if(isset($_POST['recuperare'])===true){
             	$id = $_POST['id2'];
-                $query=sprintf("SELECT * FROM impianto WHERE id=".$id);
+                $query=sprintf('SELECT * FROM impianto WHERE id='.$id);
                 $conn = new mysqli($servername, $user, $pass, $database);
                 $result = $conn->query($query);
                 if($result->num_rows === 1){
@@ -206,19 +209,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[10];
+                   						echo $row[DIECI];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$idproprietario=$_POST['idproprietario2'];
                             		if(isset($idproprietario)===true){
                             			echo $idproprietario;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" required/></td>
                 </tr>
             	<tr>
@@ -228,19 +231,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[2];
+                   						echo $row[DUE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$nomeimpianto=$_POST['nomeimpianto2'];
                             		if(isset($nomeimpianto)===true){
                             			echo $nomeimpianto;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required/></td>
                 </tr>
                 <tr>
@@ -250,19 +253,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[9];
+                   						echo $row[NOVE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$tipo=$_POST['tipo2'];
                             		if(isset($tipo)===true){
                             			echo $tipo;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" required/></td>
                 </tr>
             </tbody>
@@ -278,19 +281,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[3];
+                   						echo $row[TRE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$citta=$_POST['citta2'];
                             		if(isset($citta)===true){
                             			echo $citta;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere"  required/></td>
                   </tr>
                   <tr>
@@ -300,19 +303,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[4];
+                   						echo $row[QUATTRO];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$indirizzo=$_POST['indirizzo2'];
                             		if(isset($indirizzo)===true){
                             			echo $indirizzo;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[a-zA-Z0-9]+{0,50}" title="Deve essere composta da lettere e/o numeri" required/></td>
                   </tr>
                   <tr>
@@ -322,19 +325,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[5];
+                   						echo $row[CINQUE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$numcivico=$_POST['numcivico2'];
                             		if(isset($numcivico)===true){
                             			echo $numcivico;
                            	 		}
-                                }
+                                }}
                        		?>" pattern="[a-zA-Z0-9]+{0,50}"title="Deve essere composta da lettere e/o numeri" required/></td>
                   </tr>
               </tbody>
@@ -351,19 +354,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[6];
+                   						echo $row[SEI];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$provincia=$_POST['provincia2'];
                             		if(isset($provincia)===true){
                             			echo $provincia;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[A-Za-z]{0,2}" title="Deve contenere 2 lettere" required/></td>
                     </tr>
                     <tr>
@@ -373,19 +376,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[7];
+                   						echo $row[SETTE];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$cap=$_POST['cap2'];
                             		if(isset($cap)===true){
                             			echo $cap;
                            	 		}
-                                }
+                                }}
                        		?>" pattern= "[0-9]{0,5}" title="Deve essere composto da soli 5 numeri" required/></td>
                   	</tr>
                     <tr>
@@ -395,19 +398,19 @@
                             	require 'config.php';
                                 
                             	if(isset($_POST['recuperare'])===true){
-                                	$query=sprintf("SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id=".$_POST['id2']);
+                                	$query=sprintf('SELECT * FROM impianto inner join utente on impianto.proprietario=utente.id WHERE impianto.id='.$_POST['id2']);
                 					$conn = new mysqli($servername, $user, $pass, $database);
                 					$result = $conn->query($query);
                                     if($result->num_rows === 1) {
                                     	$row = mysqli_fetch_row($result);
-                   						echo $row[8];
+                   						echo $row[OTTO];
                                     }
-                                } elseif(isset($_POST['salvare'])===true) {
+                                } else{if(isset($_POST['salvare'])===true) {
                                 	$descrizione=$_POST['descrizione2'];
                             		if(isset($descrizione)===true){
                             			echo $descrizione;
                            	 		}
-                                }
+                                }}
                        		?>" /></td>
                   	</tr>
                 </tbody>
@@ -443,12 +446,15 @@
     	<button class="buttfiltro" name="salvare" value="salvare" type="submit" id="salvare" 
         	<?php 
            		require 'config.php';
+                $conn = '';
         		$id=$_POST['id2']; 
                 if(isset($id)===false){
                 	echo ' disabled ';
                 }
-                $query=sprintf("SELECT * FROM impianto WHERE id=".$id);
-                $conn = new mysqli($servername, $user, $pass, $database);
+                $query=sprintf('SELECT * FROM impianto WHERE id='.$id);
+                if($conn === '') {
+                    $conn = new mysqli($servername, $user, $pass, $database);
+                }
                 $result = $conn->query($query);
                 if($result->num_rows !== 1){
                 	echo ' disabled ';

@@ -1,31 +1,36 @@
 <?php
 	require 'config.php';
-    
+    require 'constants.php';
+    $conn = '';
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if(empty($conn) === true){
+    	$conn = new mysqli($servername, $user, $pass, $database);
+    }
     $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
 	$result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
 <?php
 	require 'config.php';
-    
+    $conn = '';
     $today=getdate();
-    $year1= $today['year'];
-    $year2=	$today['year']-1;
-    $year3= $today['year']-2;
-    $year4= $today['year']-3;
-    $year5= $today['year']-4;
-    $year6= $today['year']-5;
-    $year7= $today['year']-6;
-    $year8= $today['year']-7;  
+    $year1= $today[YEAR];
+    $year2=	$today[YEAR]-UNO;
+    $year3= $today[YEAR]-DUE;
+    $year4= $today[YEAR]-TRE;
+    $year5= $today[YEAR]-QUATTRO;
+    $year6= $today[YEAR]-CINQUE;
+    $year7= $today[YEAR]-SEI;
+    $year8= $today[YEAR]-SETTE;  
     $date= array($year8, $year7, $year6, $year5, $year4, $year3, $year2, $year1);
     
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if(empty($conn) === true){
+    	$conn = new mysqli($servername, $user, $pass, $database);
+    }
     $query = sprintf("SELECT * FROM utente inner join credenziale on id=utente where permesso ='u' and year(dataregistrazione) = ".$year1);
     $result = $conn->query($query);
     $clienti1 = $result->num_rows;

@@ -1,13 +1,16 @@
 <?php
 	require 'config.php';
-    
+    require 'constants.php';
+    $conn = '';
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if($conn === '') {
+    	$conn = new mysqli($servername, $user, $pass, $database);
+	}
     $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
@@ -45,24 +48,26 @@
                 <tbody>
                     <?php
                     	require 'config.php';
-                        
+                        $conn = '';
                         $id=$_POST['id'];
                         $nomeposizione=$_POST['nomeposizione'];
                         $descrizione=$_POST['descrizione'];
                         $impianto=$_POST['impianto'];
                      
                         $query = sprintf("SELECT * FROM posizione inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where permesso='u'");
-                        if(!empty($id)) {
-                        	$query = $query.sprintf(" and posizione.id = ".$id);
+                        if(!empty($id) === true) {
+                        	$query = $query.sprintf(' and posizione.id = '.$id);
                         }
-                        if(!empty($nomeposizione)){
+                        if(!empty($nomeposizione) === true){
                            	$query = $query.sprintf(" and posizione.nomeposizione = '".$nomeposizione."'");
                         }
-                        if(!empty($impianto)){
+                        if(!empty($impianto) === true){
                            	$query = $query.sprintf(" and posizione.impianto = '".$impianto."'");
                         }
-                       $query = $query.sprintf(" order by posizione.id");
-                       $conn = new mysqli($servername, $user, $pass, $database);
+                       $query = $query.sprintf(' order by posizione.id');
+                       if($conn === '') {
+    						$conn = new mysqli($servername, $user, $pass, $database);
+						}
                        $result = '';
                        if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
                         	$result = $conn->query($query);
@@ -74,8 +79,8 @@
                         	$str = '<tr>';
                             $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
                             $str = $str.'<td>'.htmlspecialchars($row[1]).'</td>';
-                            $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
-                            $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[DUE]).'</td>';
+                            $str = $str.'<td>'.htmlspecialchars($row[TRE]).'</td>';
                             $str = $str.'</tr>';
                             echo $str;
                         }

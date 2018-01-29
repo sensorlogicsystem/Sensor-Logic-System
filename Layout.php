@@ -101,5 +101,43 @@ class Layout{
         
         return $var;    
     }
-}
-?>
+    
+    function layoutSearch($id, $nome, $cognome, $email, $citta){
+    	if(isset($id)===false){$id='';}
+        if(isset($nome)===false){$nome='';}
+        if(isset($cognome)===false){$cognome='';}
+        if(isset($email)===true){$email='' ;}
+        if(isset($citta)===false){$citta='';}
+          $var='';
+          $var=$var.'<span class="filtra"> Filtra per:</span>';
+          $var=$var.'<input class="inputfiltro" type="text" placeholder="Id" id="id" name="id" maxlength="11" value="'.$id.'" pattern= "[0-9]{0,11}" title="Deve essere composto da soli numeri" />';
+          $var=$var.'<input class="inputfiltro" type="text" placeholder="Nome" id="nome" name="nome" maxlength="50" value="'.$nome.'" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />';
+          $var=$var.'<input class="inputfiltro" type="text" placeholder="Cognome" id="cognome" name="cognome" maxlength="50" value="'.$cognome.'" pattern= "[A-Za-z]{0,50}" title="Deve essere composto da sole lettere" />';
+          $var=$var.'<input class="inputfiltro" type="text" placeholder="Email" id="email" name="email" maxlength="50" value="'.$email.'"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Deve rispettare il formato: email@dominio.com"/>';
+          $var=$var.'<input class="inputfiltro" type="text" placeholder="Città" id="citta" name="citta" maxlength="50" value="'.$citta.'" pattern= "[A-Za-z]{0,50}" title="Deve essere composta da sole lettere" />';
+          $var=$var.'<button class="buttfiltro" name="filtro" value="filtro" type="submit" id="filtro">Ricerca</button>';
+          $var=$var.'<div class="positiontable">';
+           $var=$var.'<table class="tabellaClienti">';
+                $var=$var.'<thead>';
+                  $var=$var.'<tr>';
+                    $var=$var.'<th>Id</th>';
+                    $var=$var.'<th>CF</th>';
+                    $var=$var.'<th>Nome</th>';
+                    $var=$var.'<th>Cognome</th>';
+                    $var=$var.'<th>Email</th>';
+                    $var=$var.'<th>Telefono</th>';
+                    $var=$var.'<th>Città</th>';
+                    $var=$var.'<th>Indirizzo</th>';
+                    $var=$var.'<th>N°Civico</th>';
+                    $var=$var.'<th>CAP</th>';
+                    $var=$var.'<th>Provincia</th>';
+                    $var=$var.'<th>Data di nascita</th>';
+                    $var=$var.'<th>Sesso</th>';
+                    $var=$var.'<th></th>';
+                  $var=$var.'</tr>';
+                $var=$var.'</thead>';
+                
+                return $var;
+    }
+    
+}

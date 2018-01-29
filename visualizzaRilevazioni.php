@@ -1,13 +1,16 @@
 <?php
 	require 'config.php';
-    
+    require 'constants.php';
+    $conn = '';
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if(empty($conn) === true){
+    	$conn = new mysqli($servername, $user, $pass, $database);
+    }
     $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
@@ -55,6 +58,9 @@
                 <tbody>
                     <?php
                     	require 'config.php';
+                        include_once 'Rilevazioni.php';
+                        $conn = '';
+                        $query = '';
                         session_start();
                         $email=$_SESSION['email'];
                         $impianto=$_SESSION['impianto'];
@@ -64,27 +70,30 @@
                         $tipo=$_POST['tipo'];
                         $marca=$_POST['marca'];
                         $nomeposizione=$_POST['nomeposizione'];
-                        
-                        $query = sprintf("SELECT rilevazione.id, rilevazione.rilevazione, sensore.id, sensore.tipo, sensore.marca, posizione.nomeposizione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto ='%s' and credenziale.email='%s' ",mysqli_real_escape_string($conn, $impianto),mysqli_real_escape_string($conn, $email));
-                        if(!empty($idr)) {
-                        	$query = $query.sprintf(" and  rilevazione.id= ".$idr);
+                       if(empty($conn) === true){
+    						$conn = new mysqli($servername, $user, $pass, $database);
+    				   }
+                        if(empty($query) === true) {
+                        	$query = sprintf("SELECT rilevazione.id, rilevazione.rilevazione, sensore.id, sensore.tipo, sensore.marca, posizione.nomeposizione FROM rilevazione inner join sensore on rilevazione.sensore=sensore.id inner join posizione on sensore.posizione=posizione.id inner join impianto on posizione.impianto=impianto.id inner join utente on impianto.proprietario= utente.id inner join credenziale on utente.id=credenziale.utente where impianto.nomeimpianto ='%s' and credenziale.email='%s' ",mysqli_real_escape_string($conn, $impianto),mysqli_real_escape_string($conn, $email));
                         }
-                        if(!empty($ids)) {
+                        if(!empty($idr) === true) {
+                        	$query = $query.sprintf(' and  rilevazione.id= '.$idr);
+                        }
+                        if(!empty($ids) === true) {
                         	$query = $query.sprintf(" and  sensore.id= '".$ids."'");
                         }
-                        if(!empty($tipo)) {
+                        if(!empty($tipo) === true) {
                         	$query = $query.sprintf(" and  sensore.tipo= '".$tipo."'");
                         }
-                        if(!empty($marca)) {
+                        if(!empty($marca) === true) {
                         	$query = $query.sprintf(" and  sensore.marca= '".$marca."'");
                         }
-                        if(!empty($nomeposizione)){
+                        if(!empty($nomeposizione) === true){
                            	$query = $query.sprintf(" and posizione.nomeposizione = '".$nomeposizione."'");
                         }
                         
-                       $query = $query.sprintf(" order by rilevazione.id");
+                       $query = $query.sprintf(' order by rilevazione.id');
                       
-                       $conn = new mysqli($servername, $user, $pass, $database);
                        $result = '';
                        if(isset($_SESSION['email']) === true && isset($_SESSION['password']) === true ) {
                         	$result = $conn->query($query);
@@ -93,32 +102,15 @@
                         for($i=0; $i<$result->num_rows; $i++) {
                         	$row=mysqli_fetch_row($result);
                             if(empty($data)===false){
-                            	$data1=substr($data,0,4).substr($data,5,2).substr($data,8,2);
-                                $data2=substr($row[1],0,4).substr($row[1],4,2).substr($row[1],6,2);
+                            	$data1=substr($data,ZERO,QUATTRO).substr($data,CINQUE,DUE).substr($data,OTTO,DUE);
+                                $data2=substr($row[UNO],ZERO,QUATTRO).substr($row[UNO],QUATTRO,DUE).substr($row[UNO],SEI,DUE);
                                 if($data1===$data2){
-                                	$str = '<tr>';
-                                    $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
-                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1]),0,4).'-'.substr(htmlspecialchars($row[1]),4,2).'-'.substr(htmlspecialchars($row[1]),6,2).'</td>';
-                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1]),8,2).':'.substr(htmlspecialchars($row[1]),10,2).'</td>';
-                                    $str = $str.'<td>'.substr(htmlspecialchars($row[1]),12).'</td>';
-                                    $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
-                                    $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
-                                    $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
-                                    $str = $str.'<td>'.htmlspecialchars($row[5]).'</td>';
-                                    $str = $str.'</tr>';
-                                    echo $str;
+                                	$rilevazioni= new Rilevazioni();
+                                    $rilevazioni-> view($row);
                                 }
                             }else{
-                                $str = '<tr>';
-                                $str = $str.'<td>'.htmlspecialchars($row[0]).'</td>';
-                                $str = $str.'<td>'.substr(htmlspecialchars($row[1]),0,4).'-'.substr(htmlspecialchars($row[1]),4,2).'-'.substr(htmlspecialchars($row[1]),6,2).'</td>';
-                                $str = $str.'<td>'.substr(htmlspecialchars($row[1]),8,2).':'.substr(htmlspecialchars($row[1]),10,2).'</td>';
-                               	$str = $str.'<td>'.substr(htmlspecialchars($row[1]),12).'</td>';
-                                $str = $str.'<td>'.htmlspecialchars($row[2]).'</td>';
-                                $str = $str.'<td>'.htmlspecialchars($row[3]).'</td>';
-                                $str = $str.'<td>'.htmlspecialchars($row[4]).'</td>';
-                                $str = $str.'<td>'.htmlspecialchars($row[5]).'</td>';
-                                echo $str;
+                                $ril=new Rilevazioni();
+                                $ril-> view($row);
                             }
                         }
                     ?>                    
@@ -159,7 +151,7 @@
             $_SESSION['tipo']=$_POST['tipo'];
             $_SESSION['marca']=$_POST['marca'];
             $_SESSION['nomeposizione']=$_POST['nomeposizione'];
-            header("location:rilevazionipdf.php");
+            header('location:rilevazionipdf.php');
         }        
       ?>
       <?php
@@ -175,7 +167,7 @@
             $_SESSION['nomeposizione']=$_POST['nomeposizione'];
             $_SESSION['destinatario']=$_POST['email10'];
             
-            header("location:inviapdf.php");
+            header('location:inviapdf.php');
         }        
       ?>
 </body>

@@ -1,15 +1,19 @@
 <?php
 	require 'config.php';
     require 'nocsrf.php';
+    require 'constants.php';
+    
 	$csrf = new nocsrf();
-
+	$conn = '';
 	session_start();
     $email = $_SESSION['email'];
     $password = $_SESSION['password'];
-    $conn = new mysqli($servername, $user, $pass, $database);
+    if($conn === '') {
+    	$conn = new mysqli($servername, $user, $pass, $database);
+	}
     $query = sprintf("SELECT * FROM credenziale where email='%s' and password='%s'",mysqli_real_escape_string($conn, $email),mysqli_real_escape_string($conn, $password));
     $result = $conn->query($query);
-    if($result === false || $result->num_rows != 1){
+    if($result === false || $result->num_rows !== 1){
     	    header('Location: http://sensorlogicsystemlogin.altervista.org/index.php');
     }
 ?>
@@ -71,7 +75,7 @@
                 $send = false;
 
                 if (preg_match($regexemail, $mail_destinatario) === 1) {
-                	if($csrf->check('csrf_token', $_POST, false, 60*19, true)){
+                	if($csrf->check(CSRF, $_POST, false, SIZE, true) === true){
                     	$send = mail($mail_destinatario, $mail_oggetto, $mail_corpo, $mail_headers);
                     }
                 }	
